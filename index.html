@@ -3838,6 +3838,25 @@
         stroke-linejoin: round;
       }
 
+      .password-toggle {
+        overflow: hidden;
+        font-size: 0;
+        line-height: 0;
+        text-indent: 0;
+      }
+
+      .password-toggle .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+
       .password-toggle .password-eye-off {
         display: none;
       }
@@ -4110,11 +4129,44 @@
       }
 
       .auth-simple-card .auth-tabs {
-        margin-bottom: 20px;
+        margin-bottom: 14px;
       }
 
       .auth-simple-card .auth-note {
         margin-top: 18px;
+      }
+
+      .auth-security-strip {
+        display: grid;
+        gap: 8px;
+        margin: 0 0 18px;
+        padding: 12px;
+        border-radius: 22px;
+        background: color-mix(in srgb, var(--app-primary) 9%, var(--app-surface));
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+      .auth-security-strip span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--app-muted);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .auth-code-field input {
+        min-height: 58px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: 0.34em;
+      }
+
+      .auth-code-field input::placeholder {
+        letter-spacing: 0.24em;
+        color: color-mix(in srgb, var(--app-muted) 70%, transparent);
       }
 
       .compact-auth-note {
@@ -5061,8 +5113,20 @@
         return Boolean(state.sessionToken && state.authUser && state.customer);
       }
 
+      function normalizeAuthScreen(screen) {
+        const value = String(screen || "");
+        const allowed = {
+          login: true,
+          register: true,
+          verifyRegister: true,
+          forgot: true,
+          resetPassword: true
+        };
+        return allowed[value] ? value : "login";
+      }
+
       function setAuthScreen(screen) {
-        state.authScreen = screen === "register" ? "register" : "login";
+        state.authScreen = normalizeAuthScreen(screen);
         saveLocal(STORAGE_KEYS.authScreen, state.authScreen);
       }
 
@@ -5219,10 +5283,15 @@
                 <button class="auth-tab ${isLoginTab ? "active" : ""}" data-action="switch-auth-screen" data-screen="login" type="button">Đăng nhập</button>
                 <button class="auth-tab ${isRegister ? "active" : ""}" data-action="switch-auth-screen" data-screen="register" type="button">Tạo tài khoản</button>
               </div>
+              <div class="auth-security-strip">
+                <span>✉️ Mã xác thực qua email</span>
+                <span>🔒 Không lưu mật khẩu thô</span>
+                <span>⏱️ Mã tự hết hạn</span>
+              </div>
 
               ${screen === "register" ? `
                 <form id="authRegisterForm" class="auth-form">
-                  <div class="auth-step-note">Mỗi email chỉ tạo được một tài khoản. UniFlow sẽ gửi mã xác thực về email trước khi tạo tài khoản.</div>
+                  <div class="auth-step-note"><strong>Bước 1/2:</strong> Nhập thông tin và gửi mã xác thực. UniFlow chưa tạo tài khoản ở bước này.</div>
                   ${field("Tên hiển thị", "registerDisplayName", "", "text", true)}
                   ${field("Email", "registerEmail", "", "email", true)}
                   ${field("Mật khẩu", "registerPassword", "", "password", true)}
@@ -5233,8 +5302,12 @@
                 </form>
               ` : screen === "verifyRegister" ? `
                 <form id="authVerifyRegisterForm" class="auth-form">
-                  <div class="auth-step-note">Mã xác thực đã được gửi đến <strong>${escapeHtml(pendingEmail || "email của bạn")}</strong>. Mã có hiệu lực trong thời gian ngắn.</div>
-                  ${field("Mã xác thực", "registerVerificationCode", "", "text", true)}
+                  <div class="auth-step-note"><strong>Bước 2/2:</strong> Nhập mã đã gửi đến <strong>${escapeHtml(pendingEmail || "email của bạn")}</strong>. Tài khoản chỉ được tạo khi mã xác thực đúng.</div>
+                  <div class="field auth-code-field">
+                    <label for="registerVerificationCode">Mã xác thực</label>
+                    <input id="registerVerificationCode" name="registerVerificationCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required />
+                    <div class="field-error" data-field-error-for="registerVerificationCode" hidden></div>
+                  </div>
                   <div class="auth-actions">
                     <button class="btn btn-primary" type="submit">Xác thực & tạo tài khoản</button>
                   </div>
@@ -5245,7 +5318,7 @@
                 </form>
               ` : screen === "forgot" ? `
                 <form id="authForgotPasswordForm" class="auth-form">
-                  <div class="auth-step-note">Nhập email đã đăng ký để nhận mã đặt lại mật khẩu.</div>
+                  <div class="auth-step-note"><strong>Bước 1/2:</strong> Nhập email đã đăng ký để nhận mã đặt lại mật khẩu.</div>
                   ${field("Email", "forgotEmail", resetEmail, "email", true)}
                   <div class="auth-actions">
                     <button class="btn btn-primary" type="submit">Gửi mã đặt lại</button>
@@ -5256,9 +5329,13 @@
                 </form>
               ` : screen === "resetPassword" ? `
                 <form id="authResetPasswordForm" class="auth-form">
-                  <div class="auth-step-note">Nhập mã đã gửi về email để tạo mật khẩu mới.</div>
+                  <div class="auth-step-note"><strong>Bước 2/2:</strong> Nhập mã xác thực. Mật khẩu chỉ được đổi khi mã đúng.</div>
                   ${field("Email", "resetEmail", resetEmail, "email", true)}
-                  ${field("Mã xác thực", "resetCode", "", "text", true)}
+                  <div class="field auth-code-field">
+                    <label for="resetCode">Mã xác thực</label>
+                    <input id="resetCode" name="resetCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required />
+                    <div class="field-error" data-field-error-for="resetCode" hidden></div>
+                  </div>
                   ${field("Mật khẩu mới", "resetNewPassword", "", "password", true)}
                   ${field("Nhập lại mật khẩu mới", "resetConfirmPassword", "", "password", true)}
                   <div class="auth-actions">
@@ -5343,6 +5420,8 @@
               email: email,
               password: password
             };
+            // Password is kept only in memory for the resend-code button.
+            // The final account creation request below sends only email + verification code.
             setAuthScreen("verifyRegister");
             renderApp();
             showToast("Đã gửi mã xác thực đến email của bạn.", "success");
@@ -5384,9 +5463,12 @@
           showLoading();
 
           try {
-            const authData = await api("register", Object.assign({}, state.pendingRegistration, {
+            const authData = await api("register", {
+              email: state.pendingRegistration.email,
+              displayName: state.pendingRegistration.displayName,
+              customerName: state.pendingRegistration.customerName,
               verificationCode: verificationCode
-            }));
+            });
             state.pendingRegistration = null;
             applyAuthPayload(authData);
             state.sessionRestoreInProgress = false;
@@ -7994,24 +8076,22 @@
         if (action === "register") {
           const currentAccount = getMockAuthAccount();
           const email = String(payload.email || "").trim().toLowerCase();
-          const password = String(payload.password || "");
           const displayName = String(payload.displayName || "Sinh viên").trim() || "Sinh viên";
           const customerName = String(payload.customerName || displayName || "Không gian dữ liệu").trim() || "Không gian dữ liệu";
+          const verificationCode = String(payload.verificationCode || "").trim();
+          const registerCode = loadLocal("student_mvp_mock_register_code", null);
 
           if (!email) {
             throw new Error("Email không được để trống.");
           }
 
-          if (password.length < 6) {
-            throw new Error("Mật khẩu phải có ít nhất 6 ký tự.");
+          if (!verificationCode) {
+            throw new Error("Vui lòng nhập mã xác thực.");
           }
 
           if (currentAccount && String(currentAccount.email || "").toLowerCase() === email) {
             throw new Error("Email đã được sử dụng.");
           }
-
-          const verificationCode = String(payload.verificationCode || "").trim();
-          const registerCode = loadLocal("student_mvp_mock_register_code", null);
 
           if (!registerCode || String(registerCode.email || "") !== email || String(registerCode.code || "") !== verificationCode) {
             throw new Error("Mã xác thực không đúng hoặc đã hết hạn.");
@@ -8027,7 +8107,7 @@
             customerSlug: String(customerName || "local").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "local",
             customerName: customerName,
             email: email,
-            password: password,
+            password: String(registerCode.password || ""),
             displayName: displayName,
             sessionToken: "mock_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10),
             expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
@@ -8999,6 +9079,15 @@
           } else if (event.target.id === "authRegisterForm") {
             event.preventDefault();
             await submitRegisterForm(event.target);
+          } else if (event.target.id === "authVerifyRegisterForm") {
+            event.preventDefault();
+            await submitVerifyRegisterForm(event.target);
+          } else if (event.target.id === "authForgotPasswordForm") {
+            event.preventDefault();
+            await submitForgotPasswordForm(event.target);
+          } else if (event.target.id === "authResetPasswordForm") {
+            event.preventDefault();
+            await submitResetPasswordForm(event.target);
           } else if (event.target.id === "changePasswordForm") {
             event.preventDefault();
             await submitChangePasswordForm(event.target);
