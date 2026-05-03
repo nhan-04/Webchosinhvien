@@ -1293,7 +1293,7 @@
         left: 12px;
         z-index: 30;
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
+        grid-template-columns: repeat(8, minmax(0, 1fr));
         gap: 4px;
         padding: 8px 5px;
         border: 1px solid rgba(232, 223, 208, 0.82);
@@ -2901,7 +2901,7 @@
 
         .modal-actions { flex-direction: column-reverse; }
         .mvp-bottom-nav {
-          grid-template-columns: repeat(7, minmax(0, 1fr));
+          grid-template-columns: repeat(8, minmax(0, 1fr));
           gap: 3px;
           padding: 7px 5px;
         }
@@ -3700,7 +3700,7 @@
 
       @media (max-width: 359px) {
         .mvp-bottom-nav {
-          grid-template-columns: repeat(7, 44px);
+          grid-template-columns: repeat(8, 44px);
         }
       }
 
@@ -3713,6 +3713,737 @@
           animation-iteration-count: 1 !important;
           transition-duration: 0.001ms !important;
         }
+      }
+
+
+
+      /* ===== Professional 3D interface patch ===== */
+      :root {
+        --pro-card-action-size: 38px;
+        --pro-card-action-gap: 8px;
+        --pro-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+
+      .item-card.has-card-actions,
+      .subject-card.has-card-actions,
+      .task-card.has-card-actions,
+      .grade-card.has-card-actions {
+        position: relative;
+        padding-right: clamp(82px, 8vw, 112px);
+      }
+
+      .card-quick-actions {
+        position: absolute;
+        top: clamp(12px, 1.2vw, 18px);
+        right: clamp(12px, 1.2vw, 18px);
+        z-index: 8;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--pro-card-action-gap);
+      }
+
+      .card-icon-action {
+        width: var(--pro-card-action-size);
+        height: var(--pro-card-action-size);
+        min-width: var(--pro-card-action-size);
+        min-height: var(--pro-card-action-size);
+        display: inline-grid;
+        place-items: center;
+        padding: 0;
+        border-radius: 999px;
+        color: var(--app-muted);
+        background: color-mix(in srgb, var(--app-surface) 88%, transparent);
+        border: 1px solid rgba(255, 255, 255, 0.52);
+        box-shadow: 0 12px 28px rgba(63, 74, 90, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1;
+        transition: transform 0.18s var(--pro-motion-ease), box-shadow 0.18s var(--pro-motion-ease), color 0.18s ease, background 0.18s ease;
+      }
+
+      .card-icon-action.card-edit {
+        color: var(--app-primary-strong);
+      }
+
+      .card-icon-action.card-delete {
+        color: var(--app-danger);
+        font-size: 24px;
+      }
+
+      .card-icon-action:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 16px 34px rgba(63, 74, 90, 0.18), var(--ring-focus);
+      }
+
+      .card-icon-action:active {
+        transform: translateY(1px) scale(0.96);
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+
+      /* ===== Password visibility toggle patch ===== */
+      .password-field {
+        min-width: 0;
+      }
+
+      .password-input-wrap {
+        position: relative;
+        display: block;
+        min-width: 0;
+      }
+
+      .password-input-wrap input {
+        padding-right: 62px;
+      }
+
+      .password-toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        min-height: 42px;
+        display: inline-grid;
+        place-items: center;
+        padding: 0;
+        border-radius: 16px;
+        color: var(--app-muted);
+        background: color-mix(in srgb, var(--app-surface) 88%, transparent);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 22px rgba(63, 74, 90, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+        transform: translateY(-50%);
+        transition: transform 0.16s var(--pro-motion-ease), color 0.16s ease, box-shadow 0.16s var(--pro-motion-ease), background 0.16s ease;
+      }
+
+      .password-toggle svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .password-toggle .password-eye-off {
+        display: none;
+      }
+
+      .password-toggle.is-visible {
+        color: var(--app-primary-strong);
+        box-shadow: var(--shadow-inset-soft), var(--shadow-accent);
+      }
+
+      .password-toggle.is-visible .password-eye-on {
+        display: none;
+      }
+
+      .password-toggle.is-visible .password-eye-off {
+        display: block;
+      }
+
+      .password-toggle:hover {
+        color: var(--app-primary-strong);
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 14px 30px rgba(63, 74, 90, 0.14), var(--ring-focus);
+      }
+
+      .password-toggle:active {
+        transform: translateY(-50%) scale(0.96);
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+      .password-toggle:focus-visible {
+        outline: none;
+        box-shadow: var(--ring-focus), var(--shadow-soft);
+      }
+
+      .task-card .task-badges,
+      .subject-card .item-meta,
+      .grade-card .item-meta {
+        padding-right: 2px;
+      }
+
+      .stats-hero {
+        overflow: hidden;
+      }
+
+      .stats-hero .section-head {
+        align-items: flex-start;
+        padding-right: 0;
+      }
+
+      .stats-hero-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+        gap: clamp(16px, 2vw, 26px);
+        align-items: stretch;
+      }
+
+      .stats-filter-card,
+      .completion-meter-card {
+        min-width: 0;
+        min-height: 100%;
+        padding: clamp(16px, 2vw, 22px);
+        border-radius: 26px;
+        background: color-mix(in srgb, var(--app-surface) 88%, rgba(39, 199, 184, 0.08));
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+      .stats-month-field {
+        width: 100%;
+      }
+
+      .stats-month-field input[type="month"] {
+        min-height: 64px;
+        font-size: clamp(16px, 1.6vw, 20px);
+        letter-spacing: -0.02em;
+      }
+
+      .completion-meter-card {
+        display: grid;
+        align-content: center;
+        gap: 14px;
+      }
+
+      .completion-meter-card .meter-copy {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        gap: 14px;
+      }
+
+      .completion-meter-card .stat-label,
+      .stats-grid .stat-label {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.32;
+        max-width: 100%;
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .completion-meter-card .meter-copy strong {
+        display: block;
+        margin-top: 4px;
+        font-size: clamp(34px, 5vw, 54px);
+        line-height: 0.95;
+        letter-spacing: -0.06em;
+      }
+
+      .completion-meter-card .badge-status {
+        justify-self: end;
+        max-width: min(260px, 100%);
+        text-align: center;
+        justify-content: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        align-items: stretch;
+      }
+
+      .stats-grid .stat-card {
+        min-height: 150px;
+        align-content: space-between;
+        padding: clamp(18px, 2vw, 24px);
+      }
+
+      .stats-grid .stat-value {
+        max-width: 100%;
+        font-size: clamp(30px, 4vw, 42px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .analytics-grid .mvp-card {
+        min-width: 0;
+      }
+
+      .chart-row {
+        min-width: 0;
+      }
+
+      .bar-line {
+        grid-template-columns: minmax(130px, 1fr) minmax(140px, 2fr) max-content;
+      }
+
+      .bar-line strong {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.35;
+      }
+
+      .bar-line span {
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translate3d(0, 26px, 0) rotateX(5deg) scale(0.985);
+        transform-origin: center top;
+        transition: opacity 0.72s var(--pro-motion-ease), transform 0.72s var(--pro-motion-ease), box-shadow 0.28s ease;
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+      }
+
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+      }
+
+      .motion-3d {
+        transform-style: preserve-3d;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .reveal-on-scroll.motion-3d.is-visible:hover {
+          transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate3d(0, -5px, 18px);
+          box-shadow: var(--shadow-floating);
+        }
+      }
+
+      @media (max-width: 899px) {
+        .stats-hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .completion-meter-card .meter-copy {
+          grid-template-columns: 1fr;
+        }
+
+        .completion-meter-card .badge-status {
+          justify-self: start;
+        }
+      }
+
+      @media (max-width: 719px) {
+        .item-card.has-card-actions,
+        .subject-card.has-card-actions,
+        .task-card.has-card-actions,
+        .grade-card.has-card-actions {
+          padding-top: 64px;
+          padding-right: var(--layout-card-pad, 18px);
+        }
+
+        .card-quick-actions {
+          top: 14px;
+          right: 14px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-line {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-line span {
+          text-align: left;
+          white-space: normal;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-on-scroll,
+        .reveal-on-scroll.is-visible,
+        .reveal-on-scroll.motion-3d.is-visible:hover {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+
+
+
+      /* ===== Compact auth + guide page redesign ===== */
+      .auth-simple-layout {
+        width: min(480px, 100%);
+        max-width: 480px;
+        display: block;
+        margin: auto;
+      }
+
+      .auth-simple-card {
+        width: 100%;
+        padding: clamp(24px, 4vw, 38px);
+        border-radius: 34px;
+      }
+
+      .auth-simple-brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+
+      .auth-simple-brand h1 {
+        margin: 0;
+        color: var(--app-text);
+        font-size: clamp(26px, 4vw, 34px);
+        line-height: 1;
+        letter-spacing: -0.05em;
+      }
+
+      .auth-simple-brand p {
+        margin: 6px 0 0;
+        color: var(--app-muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .auth-simple-card .auth-tabs {
+        margin-bottom: 20px;
+      }
+
+      .auth-simple-card .auth-note {
+        margin-top: 18px;
+      }
+
+      .compact-auth-note {
+        display: grid;
+        gap: 5px;
+      }
+
+      @media (max-width: 520px) {
+        .auth-simple-card {
+          border-radius: 28px;
+          padding: 22px;
+        }
+      }
+
+      .guide-hero,
+      .guide-module-card,
+      .guide-workflow-card,
+      .guide-mini-card,
+      .guide-start-card {
+        transform-style: preserve-3d;
+      }
+
+      .guide-hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: clamp(18px, 3vw, 34px);
+        align-items: stretch;
+      }
+
+      .guide-hero-copy {
+        display: grid;
+        align-content: center;
+        gap: 14px;
+      }
+
+      .guide-hero-copy h2 {
+        margin: 0;
+        max-width: 780px;
+        color: var(--app-text);
+        font-size: clamp(32px, 5vw, 58px);
+        line-height: 0.98;
+        letter-spacing: -0.065em;
+      }
+
+      .guide-start-card,
+      .guide-mini-card {
+        padding: clamp(16px, 2vw, 22px);
+        border-radius: 26px;
+        background: color-mix(in srgb, var(--app-surface) 86%, rgba(39, 199, 184, 0.1));
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+      .guide-start-card h3,
+      .guide-module-card h3 {
+        margin: 8px 0 8px;
+        color: var(--app-text);
+        font-size: 20px;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+      }
+
+      .guide-step-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-height: 34px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        color: var(--app-primary-strong);
+        background: color-mix(in srgb, var(--app-primary) 12%, var(--app-surface));
+        box-shadow: var(--shadow-soft);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+      }
+
+      .guide-steps {
+        display: grid;
+        gap: 10px;
+        margin: 12px 0 0;
+        padding-left: 20px;
+        color: var(--app-muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .guide-module-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+        gap: var(--layout-gap);
+      }
+
+      .guide-module-card {
+        position: relative;
+        display: grid;
+        gap: 12px;
+        overflow: hidden;
+        min-height: 260px;
+      }
+
+      .guide-module-card .btn {
+        align-self: end;
+        justify-self: start;
+      }
+
+      .guide-module-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        border-radius: 22px;
+        color: #ffffff;
+        background: var(--gradient-primary);
+        box-shadow: 0 16px 34px rgba(15, 118, 110, 0.24);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .guide-workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        gap: 14px;
+      }
+
+      .guide-mini-card {
+        display: grid;
+        gap: 8px;
+      }
+
+      .guide-mini-card strong {
+        color: var(--app-text);
+        font-size: 15px;
+        line-height: 1.25;
+      }
+
+      .guide-mini-card span {
+        color: var(--app-muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 860px) {
+        .guide-hero-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 719px) {
+        .guide-hero-copy h2 {
+          font-size: clamp(30px, 11vw, 42px);
+        }
+
+        .guide-module-card .btn,
+        .guide-hero .hero-actions .btn {
+          width: 100%;
+        }
+      }
+
+
+
+      /* ===== Product polish: compact auth, search, onboarding, calendar ===== */
+      .topbar-search {
+        position: relative;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        flex: 0 1 360px;
+        min-width: 220px;
+        min-height: 46px;
+        padding: 0 14px;
+        border-radius: 20px;
+        background: color-mix(in srgb, var(--app-surface) 88%, transparent);
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        box-shadow: var(--shadow-inset-soft);
+        color: var(--app-muted);
+      }
+
+      .topbar-search input {
+        min-height: 42px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        font-size: 13px;
+      }
+
+      .topbar-search input:focus,
+      .topbar-search input:focus-visible {
+        box-shadow: none;
+      }
+
+      .auth-simple-card {
+        width: min(460px, 100%);
+      }
+
+      .auth-link-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: -4px;
+      }
+
+      .text-link {
+        padding: 0;
+        min-height: auto;
+        border: 0;
+        background: transparent;
+        color: var(--app-primary-strong);
+        box-shadow: none;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .auth-step-note {
+        margin: 4px 0 0;
+        padding: 12px 14px;
+        border-radius: 18px;
+        color: var(--app-muted);
+        background: color-mix(in srgb, var(--app-surface) 88%, rgba(39, 199, 184, 0.08));
+        box-shadow: var(--shadow-inset-soft);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .onboarding-grid,
+      .notification-grid,
+      .calendar-grid,
+      .global-search-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .onboarding-grid {
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      }
+
+      .onboarding-step,
+      .notification-card,
+      .calendar-day,
+      .global-search-card {
+        min-width: 0;
+        padding: 14px 16px;
+        border-radius: 22px;
+        background: color-mix(in srgb, var(--app-surface) 88%, rgba(39, 199, 184, 0.08));
+        box-shadow: var(--shadow-inset-soft);
+      }
+
+      .onboarding-step strong,
+      .notification-card strong,
+      .calendar-day strong,
+      .global-search-card strong {
+        display: block;
+        color: var(--app-text);
+        line-height: 1.25;
+      }
+
+      .onboarding-step span,
+      .notification-card span,
+      .calendar-day span,
+      .global-search-card span {
+        display: block;
+        margin-top: 6px;
+        color: var(--app-muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .notification-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .notification-card.warning {
+        background: color-mix(in srgb, var(--app-surface) 80%, rgba(242, 184, 75, 0.18));
+      }
+
+      .notification-card.danger {
+        background: color-mix(in srgb, var(--app-surface) 80%, rgba(239, 111, 108, 0.18));
+      }
+
+      .notification-card.success {
+        background: color-mix(in srgb, var(--app-surface) 80%, rgba(95, 191, 136, 0.18));
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+      }
+
+      .calendar-day {
+        min-height: 108px;
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      .calendar-day.is-muted {
+        opacity: 0.52;
+      }
+
+      .calendar-day.is-today {
+        box-shadow: var(--shadow-inset-soft), var(--shadow-accent);
+      }
+
+      .calendar-event {
+        display: block;
+        margin-top: 7px;
+        padding: 6px 8px;
+        border-radius: 999px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #ffffff;
+        background: var(--gradient-primary);
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .global-search-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      @media (min-width: 760px) {
+        .topbar-search { display: flex; }
+      }
+
+      @media (max-width: 719px) {
+        .calendar-grid { grid-template-columns: 1fr; }
+        .calendar-day { min-height: auto; }
+        .topbar-actions .icon-btn[title="Hướng dẫn sử dụng"] { display: inline-flex; }
       }
 
 </style>
@@ -3729,10 +4460,10 @@
             </div>
             <nav class="sidebar-nav" aria-label="Điều hướng desktop">
               <button class="nav-link" data-action="navigate" data-view="dashboard" type="button"><span class="nav-icon">⌂</span><span>Tổng quan</span></button>
-              <button class="nav-link" data-action="navigate" data-view="subjects" type="button"><span class="nav-icon">◎</span><span>Môn học</span></button>
               <button class="nav-link" data-action="navigate" data-view="tasks" type="button"><span class="nav-icon">✓</span><span>Công việc</span></button>
-              <button class="nav-link" data-action="navigate" data-view="expenses" type="button"><span class="nav-icon">₫</span><span>Chi tiêu</span></button>
+              <button class="nav-link" data-action="navigate" data-view="subjects" type="button"><span class="nav-icon">◎</span><span>Môn học</span></button>
               <button class="nav-link" data-action="navigate" data-view="study" type="button"><span class="nav-icon">◷</span><span>Học tập</span></button>
+              <button class="nav-link" data-action="navigate" data-view="expenses" type="button"><span class="nav-icon">₫</span><span>Chi tiêu</span></button>
               <button class="nav-link" data-action="navigate" data-view="stats" type="button"><span class="nav-icon">▦</span><span>Thống kê</span></button>
               <button class="nav-link" data-action="navigate" data-view="settings" type="button"><span class="nav-icon">⚙</span><span>Cài đặt</span></button>
             </nav>
@@ -3751,7 +4482,12 @@
                   <p id="pageSubtitle">Xin chào!</p>
                 </div>
               </div>
+              <div class="topbar-search" role="search">
+                <span aria-hidden="true">⌕</span>
+                <input id="globalSearchInput" type="search" placeholder="Tìm môn học, deadline, khoản chi..." autocomplete="off" />
+              </div>
               <div class="topbar-actions">
+                <button class="icon-btn" data-action="navigate" data-view="guide" type="button" title="Hướng dẫn sử dụng">?</button>
                 <span id="modePillTop" class="mode-pill">Đồng bộ</span>
                 <button class="icon-btn" data-action="toggle-theme" type="button" title="Đổi giao diện">☾</button>
               </div>
@@ -3764,11 +4500,9 @@
 
         <nav id="bottomNav" class="mvp-bottom-nav" aria-label="Điều hướng mobile" hidden>
           <button class="nav-link" data-action="navigate" data-view="dashboard" type="button"><span class="nav-icon">⌂</span><span>Tổng</span></button>
-          <button class="nav-link" data-action="navigate" data-view="subjects" type="button"><span class="nav-icon">◎</span><span>Môn</span></button>
           <button class="nav-link" data-action="navigate" data-view="tasks" type="button"><span class="nav-icon">✓</span><span>Việc</span></button>
-          <button class="nav-link" data-action="navigate" data-view="expenses" type="button"><span class="nav-icon">₫</span><span>Chi</span></button>
           <button class="nav-link" data-action="navigate" data-view="study" type="button"><span class="nav-icon">◷</span><span>Học</span></button>
-          <button class="nav-link" data-action="navigate" data-view="stats" type="button"><span class="nav-icon">▦</span><span>TK</span></button>
+          <button class="nav-link" data-action="navigate" data-view="expenses" type="button"><span class="nav-icon">₫</span><span>Chi</span></button>
           <button class="nav-link" data-action="navigate" data-view="settings" type="button"><span class="nav-icon">⚙</span><span>Cài</span></button>
         </nav>
 
@@ -3794,6 +4528,7 @@
       const CLOUD_SNAPSHOT_TTL_MS = 2 * 60 * 60 * 1000;
 
       const VIEWS = {
+        guide: { title: "Hướng dẫn", subtitle: "Giới thiệu chức năng và cách sử dụng UniFlow" },
         dashboard: { title: "Tổng quan", subtitle: "Toàn cảnh học tập và chi tiêu hôm nay" },
         subjects: { title: "Môn học", subtitle: "Quản lý học phần và ghi chú nhanh" },
         tasks: { title: "Công việc", subtitle: "Hạn nộp, bài tập và việc cá nhân" },
@@ -3984,7 +4719,10 @@
           activeSubjectId: "",
           activeTaskId: ""
         },
-        pomodoroAudio: Object.assign(normalizePomodoroAudioSettings(loadLocal(STORAGE_KEYS.pomodoroAudio, {})), { enabled: false })
+        pomodoroAudio: Object.assign(normalizePomodoroAudioSettings(loadLocal(STORAGE_KEYS.pomodoroAudio, {})), { enabled: false }),
+        globalSearch: "",
+        pendingRegistration: null,
+        pendingPasswordResetEmail: ""
       };
 
       const appShell = document.getElementById("mvpApp");
@@ -4432,20 +5170,18 @@
       function renderAuthScreen() {
         if (state.sessionRestoreInProgress) {
           authRoot.innerHTML = `
-            <div class="auth-layout">
-              <section class="auth-hero">
-                <div class="auth-brand">
+            <div class="auth-layout auth-simple-layout">
+              <section class="auth-card auth-simple-card auth-restore-card">
+                <div class="auth-simple-brand">
                   <span class="brand-mark brand-mark-auth">UF</span>
-                  <span class="badge">Đang đăng nhập</span>
+                  <div>
+                    <h1>UniFlow</h1>
+                    <p>Đang mở lại phiên làm việc của bạn</p>
+                  </div>
                 </div>
-                <h1>Đang mở lại không gian học tập của bạn</h1>
-                <p>UniFlow đang xác minh tài khoản, nạp dữ liệu cần thiết và đưa bạn trở lại không gian làm việc gần nhất.</p>
-              </section>
-
-              <section class="auth-card">
-                <div class="auth-note">
-                  <strong>Đang khôi phục phiên...</strong>
-                  <span>UniFlow đang xác minh tài khoản và đồng bộ dữ liệu gần nhất.</span>
+                <div class="auth-note compact-auth-note">
+                  <strong>Đang xác minh tài khoản...</strong>
+                  <span>Vui lòng chờ trong giây lát để UniFlow đồng bộ dữ liệu gần nhất.</span>
                 </div>
               </section>
             </div>
@@ -4453,76 +5189,98 @@
           return;
         }
 
-        const isRegister = state.authScreen === "register";
-        authRoot.innerHTML = `
-          <div class="auth-layout">
-            <section class="auth-hero">
-              <div class="auth-brand">
-                <span class="brand-mark brand-mark-auth">UF</span>
-                <span class="badge">UniFlow cho sinh viên Việt Nam</span>
-              </div>
-              <h1>Quản lý học tập và chi tiêu dễ dàng hơn</h1>
-              <p>Theo dõi môn học, deadline, ngân sách, nhật ký học và chi tiêu trong một không gian làm việc nhẹ mắt, mềm mại và an toàn trên cả điện thoại lẫn laptop.</p>
-              <div class="auth-kpi-row">
-                <div class="auth-kpi">
-                  <span>Trọng tâm</span>
-                  <strong>Deadline</strong>
-                </div>
-                <div class="auth-kpi">
-                  <span>Ngân sách</span>
-                  <strong>VND</strong>
-                </div>
-                <div class="auth-kpi">
-                  <span>Nhịp học</span>
-                  <strong>Pomodoro</strong>
-                </div>
-              </div>
-              <div class="auth-grid">
-                <div class="auth-highlight">
-                  <strong>Deadline luôn trong tầm mắt</strong>
-                  <span>Xem nhanh việc cần làm hôm nay, deadline sắp tới, ngân sách tháng và thời lượng học ngay sau khi đăng nhập.</span>
-                </div>
-                <div class="auth-highlight">
-                  <strong>Dữ liệu riêng theo tài khoản</strong>
-                  <span>Mỗi tài khoản có không gian dữ liệu riêng, giúp bảo vệ thông tin học tập, chi tiêu và nhật ký học của bạn.</span>
-                </div>
-              </div>
-            </section>
+        const screen = state.authScreen || "login";
+        const isRegister = screen === "register" || screen === "verifyRegister";
+        const isLoginTab = screen === "login" || screen === "forgot" || screen === "resetPassword";
+        const pendingEmail = state.pendingRegistration && state.pendingRegistration.email ? state.pendingRegistration.email : "";
+        const resetEmail = state.pendingPasswordResetEmail || "";
+        const subtitle = screen === "verifyRegister"
+          ? "Nhập mã xác thực đã gửi về email."
+          : screen === "forgot"
+            ? "Nhận mã đặt lại mật khẩu qua email."
+            : screen === "resetPassword"
+              ? "Nhập mã xác thực và mật khẩu mới."
+              : isRegister
+                ? "Tạo tài khoản để bắt đầu quản lý học tập."
+                : "Đăng nhập để tiếp tục sử dụng.";
 
-            <section class="auth-card">
-              <div class="auth-card-head">
-                <h2>${isRegister ? "Tạo tài khoản học tập" : "Chào mừng trở lại"}</h2>
-                <p>${isRegister ? "Tạo tài khoản để bắt đầu quản lý môn học, công việc, chi tiêu và nhật ký học trong một nơi duy nhất." : "Đăng nhập để tiếp tục theo dõi deadline, ngân sách và tiến độ học tập của bạn."}</p>
+        authRoot.innerHTML = `
+          <div class="auth-layout auth-simple-layout">
+            <section class="auth-card auth-simple-card">
+              <div class="auth-simple-brand">
+                <span class="brand-mark brand-mark-auth">UF</span>
+                <div>
+                  <h1>UniFlow</h1>
+                  <p>${escapeHtml(subtitle)}</p>
+                </div>
               </div>
+
               <div class="auth-tabs">
-                <button class="auth-tab ${!isRegister ? "active" : ""}" data-action="switch-auth-screen" data-screen="login" type="button">Đăng nhập</button>
+                <button class="auth-tab ${isLoginTab ? "active" : ""}" data-action="switch-auth-screen" data-screen="login" type="button">Đăng nhập</button>
                 <button class="auth-tab ${isRegister ? "active" : ""}" data-action="switch-auth-screen" data-screen="register" type="button">Tạo tài khoản</button>
               </div>
 
-              ${isRegister ? `
+              ${screen === "register" ? `
                 <form id="authRegisterForm" class="auth-form">
+                  <div class="auth-step-note">Mỗi email chỉ tạo được một tài khoản. UniFlow sẽ gửi mã xác thực về email trước khi tạo tài khoản.</div>
                   ${field("Tên hiển thị", "registerDisplayName", "", "text", true)}
-                  ${field("Tên nhóm hoặc lớp", "registerCustomerName", "", "text", true)}
                   ${field("Email", "registerEmail", "", "email", true)}
                   ${field("Mật khẩu", "registerPassword", "", "password", true)}
+                  ${field("Nhập lại mật khẩu", "registerConfirmPassword", "", "password", true)}
                   <div class="auth-actions">
-                    <button class="btn btn-primary" type="submit">Tạo tài khoản và bắt đầu</button>
+                    <button class="btn btn-primary" type="submit">Gửi mã xác thực</button>
+                  </div>
+                </form>
+              ` : screen === "verifyRegister" ? `
+                <form id="authVerifyRegisterForm" class="auth-form">
+                  <div class="auth-step-note">Mã xác thực đã được gửi đến <strong>${escapeHtml(pendingEmail || "email của bạn")}</strong>. Mã có hiệu lực trong thời gian ngắn.</div>
+                  ${field("Mã xác thực", "registerVerificationCode", "", "text", true)}
+                  <div class="auth-actions">
+                    <button class="btn btn-primary" type="submit">Xác thực & tạo tài khoản</button>
+                  </div>
+                  <div class="auth-link-row">
+                    <button class="text-link" data-action="resend-register-code" type="button">Gửi lại mã</button>
+                    <button class="text-link" data-action="switch-auth-screen" data-screen="register" type="button">Đổi email</button>
+                  </div>
+                </form>
+              ` : screen === "forgot" ? `
+                <form id="authForgotPasswordForm" class="auth-form">
+                  <div class="auth-step-note">Nhập email đã đăng ký để nhận mã đặt lại mật khẩu.</div>
+                  ${field("Email", "forgotEmail", resetEmail, "email", true)}
+                  <div class="auth-actions">
+                    <button class="btn btn-primary" type="submit">Gửi mã đặt lại</button>
+                  </div>
+                  <div class="auth-link-row">
+                    <button class="text-link" data-action="switch-auth-screen" data-screen="login" type="button">Quay lại đăng nhập</button>
+                  </div>
+                </form>
+              ` : screen === "resetPassword" ? `
+                <form id="authResetPasswordForm" class="auth-form">
+                  <div class="auth-step-note">Nhập mã đã gửi về email để tạo mật khẩu mới.</div>
+                  ${field("Email", "resetEmail", resetEmail, "email", true)}
+                  ${field("Mã xác thực", "resetCode", "", "text", true)}
+                  ${field("Mật khẩu mới", "resetNewPassword", "", "password", true)}
+                  ${field("Nhập lại mật khẩu mới", "resetConfirmPassword", "", "password", true)}
+                  <div class="auth-actions">
+                    <button class="btn btn-primary" type="submit">Đặt lại mật khẩu</button>
+                  </div>
+                  <div class="auth-link-row">
+                    <button class="text-link" data-action="switch-auth-screen" data-screen="forgot" type="button">Gửi lại mã</button>
+                    <button class="text-link" data-action="switch-auth-screen" data-screen="login" type="button">Quay lại đăng nhập</button>
                   </div>
                 </form>
               ` : `
                 <form id="authLoginForm" class="auth-form">
                   ${field("Email", "loginEmail", "", "email", true)}
                   ${field("Mật khẩu", "loginPassword", "", "password", true)}
+                  <div class="auth-link-row">
+                    <button class="text-link" data-action="switch-auth-screen" data-screen="forgot" type="button">Quên mật khẩu?</button>
+                  </div>
                   <div class="auth-actions">
                     <button class="btn btn-primary" type="submit">Đăng nhập</button>
                   </div>
                 </form>
               `}
-
-              <div class="auth-note">
-                <strong>Bảo mật dữ liệu</strong>
-                <span>Dữ liệu học tập và chi tiêu được quản lý theo tài khoản của bạn. Hãy đăng nhập để tiếp tục sử dụng UniFlow.</span>
-              </div>
             </section>
           </div>
         `;
@@ -4542,6 +5300,8 @@
             applyAuthPayload(authData);
             state.sessionRestoreInProgress = false;
             hydrateCachedCloudData();
+            state.currentView = hasAnyUserData() ? "dashboard" : "guide";
+            saveLocal(STORAGE_KEYS.currentView, state.currentView);
             syncShellVisibility();
             renderApp();
             showToast("Đăng nhập thành công. Đang đồng bộ dữ liệu...", "success");
@@ -4558,19 +5318,81 @@
       async function submitRegisterForm(form) {
         return runLockedAction("auth-register", async () => {
           const formData = new FormData(form);
+          const displayName = String(formData.get("registerDisplayName") || "").trim();
+          const email = String(formData.get("registerEmail") || "").trim();
+          const password = String(formData.get("registerPassword") || "");
+          const confirmPassword = String(formData.get("registerConfirmPassword") || "");
+
+          if (password !== confirmPassword) {
+            showToast("Mật khẩu nhập lại chưa khớp.", "error");
+            return;
+          }
+
+          setScopeBusyState(form, true, "Đang gửi mã...");
+          showLoading();
+
+          try {
+            await api("requestRegisterVerification", {
+              displayName: displayName,
+              email: email,
+              password: password
+            });
+            state.pendingRegistration = {
+              displayName: displayName,
+              customerName: displayName,
+              email: email,
+              password: password
+            };
+            setAuthScreen("verifyRegister");
+            renderApp();
+            showToast("Đã gửi mã xác thực đến email của bạn.", "success");
+          } finally {
+            hideLoading();
+            setScopeBusyState(form, false, "Đang gửi mã...");
+          }
+        });
+      }
+
+      async function resendRegisterVerificationCode() {
+        if (!state.pendingRegistration || !state.pendingRegistration.email) {
+          setAuthScreen("register");
+          renderApp();
+          return;
+        }
+
+        showLoading();
+        try {
+          await api("requestRegisterVerification", state.pendingRegistration);
+          showToast("Đã gửi lại mã xác thực.", "success");
+        } finally {
+          hideLoading();
+        }
+      }
+
+      async function submitVerifyRegisterForm(form) {
+        return runLockedAction("auth-verify-register", async () => {
+          if (!state.pendingRegistration || !state.pendingRegistration.email) {
+            setAuthScreen("register");
+            renderApp();
+            showToast("Vui lòng nhập lại thông tin tạo tài khoản.", "warning");
+            return;
+          }
+
+          const formData = new FormData(form);
+          const verificationCode = String(formData.get("registerVerificationCode") || "").trim();
           setScopeBusyState(form, true, "Đang tạo tài khoản...");
           showLoading();
 
           try {
-            const authData = await api("register", {
-              displayName: String(formData.get("registerDisplayName") || "").trim(),
-              customerName: String(formData.get("registerCustomerName") || "").trim(),
-              email: String(formData.get("registerEmail") || "").trim(),
-              password: String(formData.get("registerPassword") || "")
-            });
+            const authData = await api("register", Object.assign({}, state.pendingRegistration, {
+              verificationCode: verificationCode
+            }));
+            state.pendingRegistration = null;
             applyAuthPayload(authData);
             state.sessionRestoreInProgress = false;
             hydrateCachedCloudData();
+            state.currentView = "guide";
+            saveLocal(STORAGE_KEYS.currentView, state.currentView);
             syncShellVisibility();
             renderApp();
             showToast("Tạo tài khoản thành công. Đang đồng bộ dữ liệu...", "success");
@@ -4580,6 +5402,59 @@
           } finally {
             hideLoading();
             setScopeBusyState(form, false, "Đang tạo tài khoản...");
+          }
+        });
+      }
+
+      async function submitForgotPasswordForm(form) {
+        return runLockedAction("auth-forgot-password", async () => {
+          const formData = new FormData(form);
+          const email = String(formData.get("forgotEmail") || "").trim();
+          setScopeBusyState(form, true, "Đang gửi mã...");
+          showLoading();
+
+          try {
+            await api("requestPasswordReset", { email: email });
+            state.pendingPasswordResetEmail = email;
+            setAuthScreen("resetPassword");
+            renderApp();
+            showToast("Đã gửi mã đặt lại mật khẩu đến email của bạn.", "success");
+          } finally {
+            hideLoading();
+            setScopeBusyState(form, false, "Đang gửi mã...");
+          }
+        });
+      }
+
+      async function submitResetPasswordForm(form) {
+        return runLockedAction("auth-reset-password", async () => {
+          const formData = new FormData(form);
+          const email = String(formData.get("resetEmail") || "").trim();
+          const code = String(formData.get("resetCode") || "").trim();
+          const newPassword = String(formData.get("resetNewPassword") || "");
+          const confirmPassword = String(formData.get("resetConfirmPassword") || "");
+
+          if (newPassword !== confirmPassword) {
+            showToast("Mật khẩu mới nhập lại chưa khớp.", "error");
+            return;
+          }
+
+          setScopeBusyState(form, true, "Đang đặt lại...");
+          showLoading();
+
+          try {
+            await api("resetPassword", {
+              email: email,
+              code: code,
+              newPassword: newPassword
+            });
+            state.pendingPasswordResetEmail = "";
+            setAuthScreen("login");
+            renderApp();
+            showToast("Đã đặt lại mật khẩu. Bạn có thể đăng nhập bằng mật khẩu mới.", "success");
+          } finally {
+            hideLoading();
+            setScopeBusyState(form, false, "Đang đặt lại...");
           }
         });
       }
@@ -4919,7 +5794,10 @@
           health: true,
           initDatabase: true,
           login: true,
-          register: true
+          register: true,
+          requestRegisterVerification: true,
+          requestPasswordReset: true,
+          resetPassword: true
         };
         const shouldUseMock = !isApiConfigured();
 
@@ -5157,6 +6035,7 @@
 
           if (list) {
             list.innerHTML = renderTasksListHtml();
+            requestAnimationFrame(enhanceInterfaceMotion);
             return;
           }
         }
@@ -5235,7 +6114,7 @@
         }
 
         authRoot.innerHTML = "";
-        const meta = VIEWS[state.currentView] || VIEWS.dashboard;
+        const meta = VIEWS[state.currentView] || VIEWS.guide;
         document.getElementById("pageTitle").textContent = meta.title;
         document.getElementById("pageSubtitle").textContent = `${meta.subtitle} · ${state.displayName}`;
         document.querySelectorAll(".nav-link[data-view]").forEach((button) => {
@@ -5243,23 +6122,35 @@
         });
         updateModePills();
 
-        if (state.currentView === "dashboard") {
-          viewRoot.innerHTML = renderDashboard();
+        let contentHtml = "";
+
+        if (state.currentView === "guide") {
+          contentHtml = renderGuide();
+        } else if (state.currentView === "dashboard") {
+          contentHtml = renderDashboard();
         } else if (state.currentView === "subjects") {
-          viewRoot.innerHTML = renderSubjects();
+          contentHtml = renderSubjects();
         } else if (state.currentView === "tasks") {
-          viewRoot.innerHTML = renderTasks();
+          contentHtml = renderTasks();
         } else if (state.currentView === "expenses") {
-          viewRoot.innerHTML = renderExpenses();
+          contentHtml = renderExpenses();
         } else if (state.currentView === "study") {
-          viewRoot.innerHTML = renderStudy();
+          contentHtml = renderStudy();
         } else if (state.currentView === "stats") {
-          viewRoot.innerHTML = renderStats();
+          contentHtml = renderStats();
         } else if (state.currentView === "settings") {
-          viewRoot.innerHTML = renderSettings();
+          contentHtml = renderSettings();
         } else {
-          viewRoot.innerHTML = renderDashboard();
+          contentHtml = renderDashboard();
         }
+
+        viewRoot.innerHTML = renderGlobalSearchResults() + contentHtml;
+        const globalSearchInput = document.getElementById("globalSearchInput");
+        if (globalSearchInput) {
+          globalSearchInput.value = state.globalSearch || "";
+        }
+
+        requestAnimationFrame(enhanceInterfaceMotion);
       }
 
       function navigateTo(view) {
@@ -5274,12 +6165,326 @@
         viewRoot.focus({ preventScroll: true });
       }
 
+      function renderGuide() {
+        const accountEmail = (state.authUser && state.authUser.email) || "";
+        const modules = [
+          {
+            icon: "◎",
+            title: "Môn học",
+            description: "Tạo danh sách môn học, giảng viên, phòng học, học kỳ, số tín chỉ và màu nhận diện riêng.",
+            action: "subjects",
+            cta: "Quản lý môn học"
+          },
+          {
+            icon: "✓",
+            title: "Công việc & deadline",
+            description: "Ghi bài tập, lịch thi, dự án, mức ưu tiên, trạng thái, ngày giờ hạn nộp và thời lượng dự kiến.",
+            action: "tasks",
+            cta: "Thêm công việc"
+          },
+          {
+            icon: "₫",
+            title: "Chi tiêu & ngân sách",
+            description: "Theo dõi khoản chi theo danh mục, phương thức thanh toán và đặt ngân sách tháng bằng VND.",
+            action: "expenses",
+            cta: "Ghi chi tiêu"
+          },
+          {
+            icon: "◷",
+            title: "Học tập & Pomodoro",
+            description: "Bấm giờ Pomodoro, bật âm nền tập trung và lưu nhật ký học theo môn hoặc công việc.",
+            action: "study",
+            cta: "Bắt đầu học"
+          },
+          {
+            icon: "▦",
+            title: "Điểm số & thống kê",
+            description: "Nhập điểm hệ 10, quy đổi điểm chữ, tính GPA tham khảo và xem thống kê theo tháng.",
+            action: "stats",
+            cta: "Xem thống kê"
+          },
+          {
+            icon: "⚙",
+            title: "Cài đặt & nhắc deadline",
+            description: "Cập nhật hồ sơ, giao diện, ngân sách mặc định, email nhắc deadline và đổi mật khẩu.",
+            action: "settings",
+            cta: "Mở cài đặt"
+          }
+        ];
+
+        return `
+          <section class="mvp-card hero-card guide-hero">
+            <div class="guide-hero-grid">
+              <div class="guide-hero-copy">
+                <span class="badge-soft">Xin chào, ${escapeHtml(state.displayName)}</span>
+                <h2>Bắt đầu với UniFlow</h2>
+                <p class="muted">UniFlow giúp bạn gom môn học, deadline, chi tiêu, giờ học, điểm số và nhắc việc vào một không gian làm việc gọn gàng. Trang này là hướng dẫn nhanh trước khi bạn bắt đầu sử dụng.</p>
+                ${accountEmail ? `<p class="muted">Tài khoản đang dùng: <strong>${escapeHtml(accountEmail)}</strong></p>` : ""}
+                <div class="hero-actions">
+                  <button class="btn btn-primary" data-action="navigate" data-view="dashboard" type="button">Vào tổng quan</button>
+                  <button class="btn btn-secondary" data-action="quick-add-task" type="button">+ Thêm việc đầu tiên</button>
+                  <button class="btn btn-secondary" data-action="navigate" data-view="settings" type="button">Cài đặt nhắc deadline</button>
+                </div>
+              </div>
+              <div class="guide-start-card">
+                <span class="guide-step-index">01</span>
+                <h3>Quy trình đề xuất</h3>
+                <ol class="guide-steps">
+                  <li>Tạo môn học để gắn bài tập, điểm số và nhật ký học.</li>
+                  <li>Thêm deadline theo ngày, giờ, trạng thái và mức ưu tiên.</li>
+                  <li>Đặt ngân sách tháng, sau đó ghi chi tiêu hằng ngày.</li>
+                  <li>Dùng Pomodoro khi học và lưu lại nhật ký sau mỗi phiên.</li>
+                  <li>Mở Thống kê để xem tiến độ công việc, chi tiêu và giờ học.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="guide-module-grid">
+            ${modules.map((item, index) => `
+              <article class="mvp-card guide-module-card">
+                <div class="guide-module-icon">${escapeHtml(item.icon)}</div>
+                <span class="guide-step-index">${String(index + 2).padStart(2, "0")}</span>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p class="muted">${escapeHtml(item.description)}</p>
+                <button class="btn btn-secondary" data-action="navigate" data-view="${escapeAttr(item.action)}" type="button">${escapeHtml(item.cta)}</button>
+              </article>
+            `).join("")}
+          </section>
+
+          <section class="mvp-card guide-workflow-card">
+            <div class="section-head">
+              <div>
+                <h2>Hướng dẫn sử dụng nhanh</h2>
+                <p>Backend hiện hỗ trợ tài khoản, phiên đăng nhập, dữ liệu theo người dùng, môn học, công việc, chi tiêu, ngân sách, nhật ký học, điểm số, thống kê và nhắc deadline.</p>
+              </div>
+              <span class="badge-status">Đồng bộ theo tài khoản</span>
+            </div>
+            <div class="guide-workflow-grid">
+              <div class="guide-mini-card">
+                <strong>1. Thiết lập ban đầu</strong>
+                <span>Vào Cài đặt để kiểm tra tên hiển thị, ngân sách tháng mặc định, giao diện sáng/tối và email nhận nhắc deadline.</span>
+              </div>
+              <div class="guide-mini-card">
+                <strong>2. Ghi dữ liệu hằng ngày</strong>
+                <span>Thêm việc cần làm, khoản chi và nhật ký học ngay khi phát sinh để phần Tổng quan và Thống kê luôn chính xác.</span>
+              </div>
+              <div class="guide-mini-card">
+                <strong>3. Theo dõi tiến độ</strong>
+                <span>Dùng bộ lọc hôm nay, tuần này, quá hạn hoặc theo tháng để nhìn nhanh việc còn mở, ngân sách còn lại và thời lượng học.</span>
+              </div>
+              <div class="guide-mini-card">
+                <strong>4. Bảo vệ tài khoản</strong>
+                <span>Đổi mật khẩu định kỳ, đăng xuất khi dùng máy lạ và chỉ chia sẻ tài khoản với chính bạn.</span>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+
+      function hasAnyUserData() {
+        return Boolean(
+          (state.subjects && state.subjects.length) ||
+          (state.tasks && state.tasks.length) ||
+          (state.expenses && state.expenses.length) ||
+          (state.studyLogs && state.studyLogs.length) ||
+          (state.gradeRecords && state.gradeRecords.length)
+        );
+      }
+
+      function getDashboardNotifications() {
+        const dashboard = getDashboardInsights();
+        const notifications = [];
+        const currentBudget = findBudget(currentMonth());
+        const monthExpenses = filterExpenses(state.expenses, { month: currentMonth() });
+        const budgetStatus = computeBudgetStatus(currentBudget, monthExpenses);
+
+        if ((dashboard.overdueTaskCount || 0) > 0) {
+          notifications.push({ type: "danger", title: "Có việc quá hạn", message: `${dashboard.overdueTaskCount} công việc cần xử lý ngay.` });
+        }
+
+        if ((dashboard.deadlineSoonCount || 0) > 0) {
+          notifications.push({ type: "warning", title: "Deadline sắp tới", message: `${dashboard.deadlineSoonCount} công việc sẽ đến hạn trong 7 ngày.` });
+        }
+
+        if (budgetStatus.totalBudget > 0 && budgetStatus.usagePercent >= 80) {
+          notifications.push({ type: budgetStatus.usagePercent >= 100 ? "danger" : "warning", title: "Ngân sách cần chú ý", message: `Bạn đã dùng ${budgetStatus.usagePercent}% ngân sách tháng.` });
+        }
+
+        if ((dashboard.weeklyStudyMinutes || 0) <= 0) {
+          notifications.push({ type: "warning", title: "Chưa có giờ học tuần này", message: "Hãy ghi nhật ký học hoặc bắt đầu một phiên Pomodoro." });
+        }
+
+        if (!notifications.length) {
+          notifications.push({ type: "success", title: "Mọi thứ đang ổn", message: "Chưa có cảnh báo quan trọng trong hôm nay." });
+        }
+
+        return notifications;
+      }
+
+      function renderNotificationCenter() {
+        const items = getDashboardNotifications();
+        return `
+          <section class="mvp-card">
+            <div class="section-head">
+              <div>
+                <h2>Thông báo cần chú ý</h2>
+                <p>UniFlow tự tổng hợp các việc quá hạn, deadline sắp tới, ngân sách và nhịp học.</p>
+              </div>
+              <span class="badge-status">${items.length} mục</span>
+            </div>
+            <div class="notification-grid">
+              ${items.map((item) => `
+                <article class="notification-card ${escapeAttr(item.type)}">
+                  <strong>${escapeHtml(item.title)}</strong>
+                  <span>${escapeHtml(item.message)}</span>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderOnboardingChecklist() {
+        if (hasAnyUserData()) {
+          return "";
+        }
+
+        const steps = [
+          ["Tạo môn học", "Thêm môn đầu tiên để gắn deadline, điểm và nhật ký học.", "subjects"],
+          ["Thêm deadline", "Ghi công việc, hạn nộp và mức ưu tiên.", "tasks"],
+          ["Đặt ngân sách", "Nhập ngân sách tháng để theo dõi chi tiêu.", "expenses"],
+          ["Bật nhắc deadline", "Thiết lập email và mốc nhắc trong Cài đặt.", "settings"]
+        ];
+
+        return `
+          <section class="mvp-card">
+            <div class="section-head">
+              <div>
+                <h2>Thiết lập nhanh cho lần đầu sử dụng</h2>
+                <p>Làm theo 4 bước này để UniFlow bắt đầu đưa ra thống kê và nhắc việc chính xác.</p>
+              </div>
+              <span class="badge-status">Onboarding</span>
+            </div>
+            <div class="onboarding-grid">
+              ${steps.map(([title, desc, view], index) => `
+                <article class="onboarding-step">
+                  <span class="guide-step-index">${String(index + 1).padStart(2, "0")}</span>
+                  <strong>${escapeHtml(title)}</strong>
+                  <span>${escapeHtml(desc)}</span>
+                  <button class="btn btn-secondary" data-action="navigate" data-view="${escapeAttr(view)}" type="button" style="margin-top:12px;">Mở</button>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function getCalendarTasksForMonth(month) {
+        const targetMonth = String(month || currentMonth());
+        return state.tasks.map(normalizeTaskRecord).filter((task) => {
+          return task.dueDate && String(task.dueDate).slice(0, 7) === targetMonth;
+        }).sort(sortByDueDate);
+      }
+
+      function renderDeadlineCalendar(month) {
+        const targetMonth = String(month || currentMonth());
+        const [year, monthIndexRaw] = targetMonth.split("-").map(Number);
+        if (!year || !monthIndexRaw) {
+          return "";
+        }
+
+        const firstDay = new Date(year, monthIndexRaw - 1, 1);
+        const startOffset = (firstDay.getDay() + 6) % 7;
+        const startDate = new Date(year, monthIndexRaw - 1, 1 - startOffset);
+        const tasks = getCalendarTasksForMonth(targetMonth);
+        const tasksByDay = tasks.reduce((map, task) => {
+          const key = String(task.dueDate || "").slice(0, 10);
+          if (!map[key]) map[key] = [];
+          map[key].push(task);
+          return map;
+        }, {});
+        const todayKey = today();
+        const cells = [];
+
+        for (let i = 0; i < 42; i += 1) {
+          const date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+          const key = date.toISOString().slice(0, 10);
+          const isCurrentMonth = key.slice(0, 7) === targetMonth;
+          const dayTasks = tasksByDay[key] || [];
+          cells.push(`
+            <article class="calendar-day ${isCurrentMonth ? "" : "is-muted"} ${key === todayKey ? "is-today" : ""}">
+              <strong>${date.getDate()}</strong>
+              ${dayTasks.slice(0, 3).map((task) => `<span class="calendar-event" title="${escapeAttr(task.title)}">${escapeHtml(task.title)}</span>`).join("")}
+              ${dayTasks.length > 3 ? `<span>+${dayTasks.length - 3} việc khác</span>` : ""}
+            </article>
+          `);
+        }
+
+        return `
+          <section class="mvp-card">
+            <div class="section-head">
+              <div>
+                <h2>Lịch deadline tháng</h2>
+                <p>Xem nhanh hạn nộp theo ngày để chủ động sắp xếp lịch học.</p>
+              </div>
+              <span class="badge-status">${escapeHtml(targetMonth)}</span>
+            </div>
+            <div class="calendar-grid">
+              ${["T2", "T3", "T4", "T5", "T6", "T7", "CN"].map((d) => `<div class="stat-label" style="padding:0 8px 4px;">${d}</div>`).join("")}
+              ${cells.join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderGlobalSearchResults() {
+        const query = String(state.globalSearch || "").trim().toLowerCase();
+        if (!query) return "";
+
+        const matchText = (value) => String(value || "").toLowerCase().includes(query);
+        const subjectResults = state.subjects.filter((item) => matchText(item.name) || matchText(item.teacher) || matchText(item.room)).slice(0, 5);
+        const taskResults = state.tasks.map(normalizeTaskRecord).filter((item) => matchText(item.title) || matchText(item.description) || matchText(getSubjectName(item.subjectId))).slice(0, 5);
+        const expenseResults = state.expenses.filter((item) => matchText(categoryLabel(item.category)) || matchText(item.note) || matchText(item.paymentMethod)).slice(0, 5);
+        const studyResults = state.studyLogs.filter((item) => matchText(getSubjectName(item.subjectId)) || matchText(item.note)).slice(0, 5);
+        const total = subjectResults.length + taskResults.length + expenseResults.length + studyResults.length;
+
+        const renderGroup = (title, items, formatter, view) => `
+          <article class="global-search-card">
+            <strong>${escapeHtml(title)}</strong>
+            ${items.length ? items.map(formatter).join("") : `<span>Không có kết quả phù hợp.</span>`}
+            <button class="text-link" data-action="navigate" data-view="${escapeAttr(view)}" type="button" style="margin-top:10px;">Mở ${escapeHtml(title.toLowerCase())}</button>
+          </article>
+        `;
+
+        return `
+          <section class="mvp-card">
+            <div class="section-head">
+              <div>
+                <h2>Kết quả tìm kiếm</h2>
+                <p>Từ khóa: <strong>${escapeHtml(state.globalSearch)}</strong></p>
+              </div>
+              <span class="badge-status">${total} kết quả</span>
+            </div>
+            <div class="global-search-grid">
+              ${renderGroup("Môn học", subjectResults, (item) => `<span>${escapeHtml(item.name)}${item.teacher ? " · " + escapeHtml(item.teacher) : ""}</span>`, "subjects")}
+              ${renderGroup("Công việc", taskResults, (item) => `<span>${escapeHtml(item.title)}${item.dueDate ? " · " + escapeHtml(formatDate(item.dueDate)) : ""}</span>`, "tasks")}
+              ${renderGroup("Chi tiêu", expenseResults, (item) => `<span>${escapeHtml(categoryLabel(item.category))} · ${escapeHtml(formatCurrency(item.amount || 0))}</span>`, "expenses")}
+              ${renderGroup("Nhật ký học", studyResults, (item) => `<span>${escapeHtml(getSubjectName(item.subjectId))} · ${escapeHtml(formatStudyDurationCompact(item.minutes || 0))}</span>`, "study")}
+            </div>
+          </section>
+        `;
+      }
+
       function renderDashboard() {
         const dashboard = getDashboardInsights();
         const upcoming = dashboard.upcomingTasks || [];
         const recentExpenses = dashboard.recentExpenses || [];
 
         return `
+          ${renderOnboardingChecklist()}
+          ${renderNotificationCenter()}
           <section class="mvp-card hero-card">
             <div class="dashboard-hero">
               <div class="dashboard-hero-copy">
@@ -5328,6 +6533,8 @@
             </div>
             ${renderProgressBar(dashboard.monthlyExpenseTotal || 0, Math.max(dashboard.monthlyBudget || 0, 1))}
           </section>
+
+          ${renderDeadlineCalendar(currentMonth())}
 
           <div class="analytics-grid">
             <section class="mvp-card">
@@ -5434,6 +6641,7 @@
               </div>
             </div>
           </section>
+          ${renderDeadlineCalendar(currentMonth())}
           <section id="taskList" class="list-stack">${renderTasksListHtml()}</section>
         `;
       }
@@ -5528,7 +6736,7 @@
         const topSubjects = getTopEntries(studySummary.bySubject || {}, 3);
 
         return `
-          <section class="mvp-card hero-card">
+          <section class="mvp-card hero-card stats-hero">
             <div class="section-head">
               <div>
                 <h2>Thống kê theo tháng</h2>
@@ -5536,16 +6744,18 @@
               </div>
               <span class="badge-status">${escapeHtml(selectedMonth)}</span>
             </div>
-            <div class="form-grid two">
-              <div class="field">
-                <label for="statsMonth">Tháng thống kê</label>
-                <input id="statsMonth" type="month" value="${escapeAttr(selectedMonth)}" />
+            <div class="stats-hero-grid">
+              <div class="stats-filter-card">
+                <div class="field stats-month-field">
+                  <label for="statsMonth">Tháng thống kê</label>
+                  <input id="statsMonth" type="month" value="${escapeAttr(selectedMonth)}" />
+                </div>
               </div>
               ${renderCompletionRatePanel(taskMetrics)}
             </div>
           </section>
 
-          <section class="grid-cards">
+          <section class="grid-cards stats-grid">
             ${statCard("Tổng chi tháng", formatCurrency(expenseSummary.total || 0))}
             ${statCard("TB chi mỗi ngày", formatCurrency(expenseSummary.averagePerDay || 0))}
             ${statCard("Công việc hoàn thành", taskMetrics.doneCount)}
@@ -5741,7 +6951,11 @@
         const subjectName = item.subjectName || getSubjectName(item.subjectId);
 
         return `
-          <article class="item-card grade-card ${included ? "" : "excluded"}">
+          <article class="item-card grade-card has-card-actions ${included ? "" : "excluded"}">
+            ${renderCardQuickActions([
+              { kind: "edit", action: "edit-grade-record", id: item.id, label: "Sửa điểm môn học" },
+              { kind: "delete", action: "delete-grade-record", id: item.id, label: "Xóa điểm môn học" }
+            ])}
             <div class="item-top">
               <div>
                 <div class="task-badges">
@@ -5766,10 +6980,7 @@
               ${renderSubjectDetail("Điểm hệ 4.0", formatGpaValue(item.score4))}
               ${renderSubjectDetail("Điểm chữ", item.letterGrade)}
             </div>
-            <div class="item-actions">
-              <button class="btn btn-secondary" data-action="edit-grade-record" data-id="${escapeAttr(item.id)}" type="button">Sửa</button>
-              <button class="btn btn-danger" data-action="delete-grade-record" data-id="${escapeAttr(item.id)}" type="button">Xóa</button>
-            </div>
+
           </article>
         `;
       }
@@ -5973,7 +7184,11 @@
         const color = normalizeSubjectColor(subject.color);
         const taskCount = getSubjectTaskCount(subject.id);
         return `
-          <article class="item-card subject-card" style="--subject-color:${escapeAttr(color)};">
+          <article class="item-card subject-card has-card-actions" style="--subject-color:${escapeAttr(color)};">
+            ${renderCardQuickActions([
+              { kind: "edit", action: "edit-subject", id: subject.id, label: "Sửa môn học" },
+              { kind: "delete", action: "delete-subject", id: subject.id, label: "Xóa môn học" }
+            ])}
             <div class="item-top subject-card-top">
               <div class="subject-main">
                 <div class="subject-title-row">
@@ -5998,10 +7213,7 @@
               <strong>Ghi chú</strong>
               <div class="muted">${escapeHtml(subject.note || "Chưa có ghi chú.")}</div>
             </div>
-            <div class="item-actions">
-              <button class="btn btn-secondary" data-action="edit-subject" data-id="${escapeAttr(subject.id)}" type="button">Sửa</button>
-              <button class="btn btn-danger" data-action="delete-subject" data-id="${escapeAttr(subject.id)}" type="button">Xóa</button>
-            </div>
+
           </article>
         `;
       }
@@ -6013,7 +7225,11 @@
         const overdue = isTaskOverdue(item);
 
         return `
-          <article class="item-card task-card ${overdue ? "task-card-overdue" : ""}">
+          <article class="item-card task-card has-card-actions ${overdue ? "task-card-overdue" : ""}">
+            ${renderCardQuickActions([
+              { kind: "edit", action: "edit-task", id: item.id, label: "Sửa công việc" },
+              { kind: "delete", action: "delete-task", id: item.id, label: "Xóa công việc" }
+            ])}
             <div class="item-top">
               <div>
                 <div class="task-badges">
@@ -6037,17 +7253,18 @@
               ${item.status !== "doing" ? `<button class="btn btn-secondary" data-action="set-task-status" data-id="${escapeAttr(item.id)}" data-status="doing" type="button">Chuyển sang đang làm</button>` : ""}
               ${item.status !== "done" ? `<button class="btn btn-primary" data-action="complete-task" data-id="${escapeAttr(item.id)}" type="button">Hoàn thành</button>` : ""}
             </div>
-            <div class="item-actions">
-              <button class="btn btn-secondary" data-action="edit-task" data-id="${escapeAttr(item.id)}" type="button">Sửa</button>
-              <button class="btn btn-danger" data-action="delete-task" data-id="${escapeAttr(item.id)}" type="button">Xóa</button>
-            </div>
+
           </article>
         `;
       }
 
       function renderExpenseCard(expense) {
         return `
-          <article class="item-card">
+          <article class="item-card has-card-actions">
+            ${renderCardQuickActions([
+              { kind: "edit", action: "edit-expense", id: expense.id, label: "Sửa khoản chi" },
+              { kind: "delete", action: "delete-expense", id: expense.id, label: "Xóa khoản chi" }
+            ])}
             <div class="item-top">
               <div>
                 <h3 class="item-title expense-card-amount">${formatCurrency(expense.amount)}</h3>
@@ -6059,10 +7276,7 @@
               <span class="badge-soft badge-warning">${escapeHtml(categoryLabel(expense.category))}</span>
             </div>
             ${expense.note ? `<p class="muted">${escapeHtml(expense.note)}</p>` : ""}
-            <div class="item-actions">
-              <button class="btn btn-secondary" data-action="edit-expense" data-id="${escapeAttr(expense.id)}" type="button">Sửa</button>
-              <button class="btn btn-danger" data-action="delete-expense" data-id="${escapeAttr(expense.id)}" type="button">Xóa</button>
-            </div>
+
           </article>
         `;
       }
@@ -6107,6 +7321,26 @@
         `;
       }
 
+
+      function renderCardQuickActions(actions) {
+        const items = Array.isArray(actions) ? actions.filter(Boolean) : [];
+
+        if (!items.length) {
+          return "";
+        }
+
+        return `
+          <div class="card-quick-actions" aria-label="Thao tác nhanh">
+            ${items.map((item) => {
+              const kind = item.kind === "delete" ? "delete" : "edit";
+              const icon = kind === "delete" ? "×" : "✎";
+              const label = item.label || (kind === "delete" ? "Xóa" : "Sửa");
+              return `<button class="card-icon-action card-${kind}" data-action="${escapeAttr(item.action || "")}" data-id="${escapeAttr(item.id || "")}" type="button" title="${escapeAttr(label)}" aria-label="${escapeAttr(label)}"><span aria-hidden="true">${icon}</span><span class="sr-only">${escapeHtml(label)}</span></button>`;
+            }).join("")}
+          </div>
+        `;
+      }
+
       function renderTopList(entries, options) {
         const settings = Object.assign({
           labelFormatter: (value) => value,
@@ -6139,7 +7373,7 @@
         const activeTasks = Number(taskMetrics.doneCount || 0) + Number(taskMetrics.openCount || 0);
 
         return `
-          <div class="meter-card">
+          <div class="meter-card completion-meter-card">
             <div class="meter-copy">
               <div>
                 <div class="stat-label">Tỉ lệ hoàn thành công việc</div>
@@ -6384,7 +7618,10 @@
         const task = log.taskId ? findById(state.tasks, log.taskId) : null;
 
         return `
-          <article class="item-card">
+          <article class="item-card has-card-actions">
+            ${renderCardQuickActions([
+              { kind: "delete", action: "delete-study-log", id: log.id, label: "Xóa nhật ký học" }
+            ])}
             <div class="item-top">
               <div>
                 <h3 class="item-title">${escapeHtml(formatStudyDuration(log.minutes || 0))}</h3>
@@ -6397,9 +7634,7 @@
               <span class="badge-status">${escapeHtml(formatStudyDurationCompact(log.minutes || 0))}</span>
             </div>
             ${log.note ? `<div class="study-log-note"><div class="muted">${escapeHtml(log.note)}</div></div>` : ""}
-            <div class="item-actions">
-              <button class="btn btn-danger" data-action="delete-study-log" data-id="${escapeAttr(log.id)}" type="button">Xóa</button>
-            </div>
+
           </article>
         `;
       }
@@ -6696,6 +7931,66 @@
           return { initialized: true, sheets: ["Users", "Subjects", "Tasks", "Expenses", "Budgets", "StudyLogs", "GradeRecords", "Settings"], defaultUserId: state.userId, timestamp: now };
         }
 
+        if (action === "requestRegisterVerification") {
+          const currentAccount = getMockAuthAccount();
+          const email = String(payload.email || "").trim().toLowerCase();
+          const password = String(payload.password || "");
+          const displayName = String(payload.displayName || "Sinh viên").trim() || "Sinh viên";
+
+          if (!email) {
+            throw new Error("Email không được để trống.");
+          }
+
+          if (password.length < 6) {
+            throw new Error("Mật khẩu phải có ít nhất 6 ký tự.");
+          }
+
+          if (currentAccount && String(currentAccount.email || "").toLowerCase() === email) {
+            throw new Error("Email đã được sử dụng.");
+          }
+
+          saveLocal("student_mvp_mock_register_code", { email, code: "123456", displayName, password, createdAt: now });
+          return { sent: true, email, expiresInMinutes: 15, devCode: "123456" };
+        }
+
+        if (action === "requestPasswordReset") {
+          const account = getMockAuthAccount();
+          const email = String(payload.email || "").trim().toLowerCase();
+
+          if (!account || String(account.email || "").toLowerCase() !== email) {
+            throw new Error("Không tìm thấy tài khoản với email này.");
+          }
+
+          saveLocal("student_mvp_mock_reset_code", { email, code: "123456", createdAt: now });
+          return { sent: true, email, expiresInMinutes: 15, devCode: "123456" };
+        }
+
+        if (action === "resetPassword") {
+          const account = getMockAuthAccount();
+          const email = String(payload.email || "").trim().toLowerCase();
+          const code = String(payload.code || "").trim();
+          const newPassword = String(payload.newPassword || "");
+          const reset = loadLocal("student_mvp_mock_reset_code", null);
+
+          if (!account || String(account.email || "").toLowerCase() !== email) {
+            throw new Error("Không tìm thấy tài khoản với email này.");
+          }
+
+          if (!reset || String(reset.email || "") !== email || String(reset.code || "") !== code) {
+            throw new Error("Mã đặt lại mật khẩu không đúng hoặc đã hết hạn.");
+          }
+
+          if (newPassword.length < 6) {
+            throw new Error("Mật khẩu mới phải có ít nhất 6 ký tự.");
+          }
+
+          account.password = newPassword;
+          account.updatedAt = now;
+          saveMockAuthAccount(account);
+          removeLocal("student_mvp_mock_reset_code");
+          return { reset: true, email };
+        }
+
         if (action === "register") {
           const currentAccount = getMockAuthAccount();
           const email = String(payload.email || "").trim().toLowerCase();
@@ -6713,6 +8008,13 @@
 
           if (currentAccount && String(currentAccount.email || "").toLowerCase() === email) {
             throw new Error("Email đã được sử dụng.");
+          }
+
+          const verificationCode = String(payload.verificationCode || "").trim();
+          const registerCode = loadLocal("student_mvp_mock_register_code", null);
+
+          if (!registerCode || String(registerCode.email || "") !== email || String(registerCode.code || "") !== verificationCode) {
+            throw new Error("Mã xác thực không đúng hoặc đã hết hạn.");
           }
 
           if (currentAccount) {
@@ -6735,6 +8037,7 @@
           };
 
           saveMockAuthAccount(account);
+          removeLocal("student_mvp_mock_register_code");
           ensureMockSeedDataForUser(account);
           return buildMockAuthResponse(account);
         }
@@ -7599,6 +8902,94 @@
         }).sort(sortVisibleTasks);
       }
 
+
+      let revealObserver = null;
+
+      function getRevealObserver() {
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          return null;
+        }
+
+        if (!("IntersectionObserver" in window)) {
+          return null;
+        }
+
+        if (!revealObserver) {
+          revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          }, {
+            root: null,
+            threshold: 0.12,
+            rootMargin: "0px 0px -8% 0px"
+          });
+        }
+
+        return revealObserver;
+      }
+
+      function handleCardPointerMove(event) {
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          return;
+        }
+
+        const card = event.currentTarget;
+        const rect = card.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) {
+          return;
+        }
+
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.setProperty("--tilt-x", `${(-y * 4).toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+      }
+
+      function resetCardPointer(event) {
+        const card = event.currentTarget;
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+      }
+
+      function enhanceInterfaceMotion() {
+        if (!viewRoot) {
+          return;
+        }
+
+        const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const observer = getRevealObserver();
+        const elements = Array.from(viewRoot.querySelectorAll(".mvp-card, .item-card, .stat-card, .compact-row, .top-item, .bar-line, .empty-state"));
+
+        elements.forEach((element, index) => {
+          element.classList.add("reveal-on-scroll");
+
+          if (!element.style.getPropertyValue("--reveal-delay")) {
+            element.style.setProperty("--reveal-delay", `${Math.min((index % 8) * 55, 385)}ms`);
+          }
+
+          if (reduceMotion || !observer) {
+            element.classList.add("is-visible");
+          } else {
+            observer.observe(element);
+          }
+
+          if (!reduceMotion && !element.dataset.tiltReady && element.matches(".mvp-card, .item-card, .stat-card, .compact-row, .top-item")) {
+            element.dataset.tiltReady = "true";
+            element.classList.add("motion-3d");
+            element.addEventListener("pointermove", handleCardPointerMove);
+            element.addEventListener("pointerleave", resetCardPointer);
+            element.addEventListener("pointercancel", resetCardPointer);
+          }
+        });
+      }
+
       /* ===== Event handlers ===== */
       document.addEventListener("submit", async (event) => {
         try {
@@ -7628,9 +9019,17 @@
         const action = target.dataset.action;
 
         try {
-          if (action === "switch-auth-screen") {
-            setAuthScreen(target.dataset.screen || "login");
+          if (action === "toggle-password") {
+            togglePasswordVisibility(target);
+          } else if (action === "switch-auth-screen") {
+            const nextScreen = target.dataset.screen || "login";
+            if (nextScreen === "register") {
+              state.pendingRegistration = null;
+            }
+            setAuthScreen(nextScreen);
             renderApp();
+          } else if (action === "resend-register-code") {
+            await resendRegisterVerificationCode();
           } else if (action === "navigate") {
             navigateTo(target.dataset.view);
           } else if (action === "toggle-theme") {
@@ -7720,6 +9119,8 @@
             await logoutApp();
           } else if (action === "export-backup") {
             exportBackup();
+          } else if (action === "export-csv") {
+            exportCsvBundle();
           } else if (action === "import-backup") {
             showImportBackup();
           }
@@ -7730,11 +9131,15 @@
       });
 
       document.addEventListener("input", (event) => {
-        if (event.target.id === "taskSearch") {
+        if (event.target.id === "globalSearchInput") {
+          state.globalSearch = event.target.value;
+          renderApp();
+        } else if (event.target.id === "taskSearch") {
           state.taskSearch = event.target.value;
           const list = document.getElementById("taskList");
           if (list) {
             list.innerHTML = renderTasksListHtml();
+            requestAnimationFrame(enhanceInterfaceMotion);
           }
         } else if (event.target.id === "studyLogDate") {
           state.studyLogForm.date = event.target.value || today();
@@ -7771,6 +9176,7 @@
           const list = document.getElementById("taskList");
           if (list) {
             list.innerHTML = renderTasksListHtml();
+            requestAnimationFrame(enhanceInterfaceMotion);
           }
         } else if (event.target.id === "expenseMonth") {
           state.expenseMonth = event.target.value || currentMonth();
@@ -8603,6 +10009,32 @@
         renderApp();
       }
 
+
+      function exportCsvBundle() {
+        const rows = [];
+        const addSection = (title, headers, items) => {
+          rows.push([title]);
+          rows.push(headers);
+          (items || []).forEach((item) => rows.push(headers.map((key) => item[key] === undefined ? "" : item[key])));
+          rows.push([]);
+        };
+        addSection("Subjects", ["id", "name", "teacher", "room", "semester", "credit", "note"], state.subjects);
+        addSection("Tasks", ["id", "title", "subjectId", "type", "priority", "status", "dueDate", "dueTime", "estimatedMinutes", "description"], state.tasks);
+        addSection("Expenses", ["id", "date", "amount", "category", "paymentMethod", "note"], state.expenses);
+        addSection("StudyLogs", ["id", "subjectId", "taskId", "date", "minutes", "note"], state.studyLogs);
+        addSection("GradeRecords", ["id", "subjectName", "semester", "academicYear", "credits", "score10", "score4", "letterGrade", "includeInGpa", "note"], state.gradeRecords);
+        const csv = rows.map((row) => row.map((value) => `"${String(value === undefined || value === null ? "" : value).replace(/"/g, '""')}"`).join(",")).join("\n");
+        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `uniflow-data-${today()}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
       function exportBackup() {
         const backup = {
           exportedAt: new Date().toISOString(),
@@ -8829,13 +10261,74 @@
       }
 
       function field(label, name, value, type, required) {
+        const inputType = type || "text";
+        const escapedName = escapeAttr(name);
+        const isPassword = inputType === "password";
+
+        if (isPassword) {
+          const autocomplete = /register|new/i.test(String(name || "")) ? "new-password" : "current-password";
+
+          return `
+            <div class="field password-field">
+              <label for="${escapedName}">${escapeHtml(label)}</label>
+              <div class="password-input-wrap">
+                <input id="${escapedName}" name="${escapedName}" type="password" autocomplete="${autocomplete}" value="${escapeAttr(value)}" ${required ? "required" : ""} />
+                <button class="password-toggle" data-action="toggle-password" data-target="${escapedName}" type="button" title="Hiện mật khẩu" aria-label="Hiện mật khẩu" aria-pressed="false">
+                  <svg class="password-eye-on" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="password-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s3.5-6 10-6c2 0 3.8.55 5.26 1.33"></path>
+                    <path d="M22 12s-3.5 6-10 6c-2 0-3.8-.55-5.26-1.33"></path>
+                    <path d="M3 3l18 18"></path>
+                    <path d="M9.9 9.9A3 3 0 0 0 14.1 14.1"></path>
+                  </svg>
+                  <span class="sr-only">Hiện mật khẩu</span>
+                </button>
+              </div>
+              <div class="field-error" data-field-error-for="${escapedName}" hidden></div>
+            </div>
+          `;
+        }
+
         return `
           <div class="field">
-            <label for="${escapeAttr(name)}">${escapeHtml(label)}</label>
-            <input id="${escapeAttr(name)}" name="${escapeAttr(name)}" type="${type || "text"}" value="${escapeAttr(value)}" ${required ? "required" : ""} />
-            <div class="field-error" data-field-error-for="${escapeAttr(name)}" hidden></div>
+            <label for="${escapedName}">${escapeHtml(label)}</label>
+            <input id="${escapedName}" name="${escapedName}" type="${inputType}" value="${escapeAttr(value)}" ${required ? "required" : ""} />
+            <div class="field-error" data-field-error-for="${escapedName}" hidden></div>
           </div>
         `;
+      }
+
+      function togglePasswordVisibility(button) {
+        const input = document.getElementById(button.dataset.target || "");
+
+        if (!input) {
+          return;
+        }
+
+        const shouldShow = input.type === "password";
+        input.type = shouldShow ? "text" : "password";
+        button.classList.toggle("is-visible", shouldShow);
+        button.setAttribute("aria-pressed", String(shouldShow));
+        button.setAttribute("aria-label", shouldShow ? "Ẩn mật khẩu" : "Hiện mật khẩu");
+        button.title = shouldShow ? "Ẩn mật khẩu" : "Hiện mật khẩu";
+
+        const label = button.querySelector(".sr-only");
+
+        if (label) {
+          label.textContent = shouldShow ? "Ẩn mật khẩu" : "Hiện mật khẩu";
+        }
+
+        input.focus({ preventScroll: true });
+
+        try {
+          const caret = input.value.length;
+          input.setSelectionRange(caret, caret);
+        } catch (error) {
+          // Some input types/browsers do not support selection range after type changes.
+        }
       }
 
       function renderBudgetInputField(label, name, value) {
@@ -9749,8 +11242,8 @@
         state.displayName = localSettings.displayName || "Sinh viên";
         state.theme = localSettings.theme || "light";
         state.settings = getDefaultSettings();
-        const storedCurrentView = loadLocal(STORAGE_KEYS.currentView, "dashboard");
-        state.currentView = VIEWS[storedCurrentView] ? storedCurrentView : "dashboard";
+        const storedCurrentView = loadLocal(STORAGE_KEYS.currentView, "guide");
+        state.currentView = VIEWS[storedCurrentView] ? storedCurrentView : "guide";
         state.expenseMonth = currentMonth();
         state.statsMonth = currentMonth();
         applyTheme(state.theme);
