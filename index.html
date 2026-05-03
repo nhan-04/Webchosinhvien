@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý sinh viên Việt Nam</title>
+    <title>UniFlow - Quản lý học tập và chi tiêu</title>
     <style>
       * {
         box-sizing: border-box;
@@ -38,7 +38,7 @@
         transform: none;
       }
 
-      /* ===== MVP app layout ===== */
+      /* ===== App layout ===== */
       :root {
         --app-bg: #f7f4ed;
         --app-surface: #ffffff;
@@ -1750,7 +1750,7 @@
         }
       }
 
-      /* ===== Neumorphism / Soft UI redesign overrides ===== */
+      /* ===== Soft UI design system ===== */
       :root {
         --bg: #e0e5ec;
         --surface: #e0e5ec;
@@ -3737,8 +3737,8 @@
               <button class="nav-link" data-action="navigate" data-view="settings" type="button"><span class="nav-icon">⚙</span><span>Cài đặt</span></button>
             </nav>
             <div class="mvp-card">
-              <span id="modePillSide" class="mode-pill">Chế độ local</span>
-              <p class="muted">Dữ liệu sẽ dùng cloud khi có phiên đăng nhập hợp lệ, hoặc local/mock khi chạy môi trường phát triển.</p>
+              <span id="modePillSide" class="mode-pill">Đồng bộ dữ liệu</span>
+              <p class="muted">Dữ liệu học tập, deadline và chi tiêu được đồng bộ an toàn theo tài khoản đăng nhập.</p>
             </div>
           </aside>
 
@@ -3752,7 +3752,7 @@
                 </div>
               </div>
               <div class="topbar-actions">
-                <span id="modePillTop" class="mode-pill">Local</span>
+                <span id="modePillTop" class="mode-pill">Đồng bộ</span>
                 <button class="icon-btn" data-action="toggle-theme" type="button" title="Đổi giao diện">☾</button>
               </div>
             </header>
@@ -3930,7 +3930,7 @@
       const SUBJECT_COLOR_PRESETS = ["#2563EB", "#0F766E", "#7C3AED", "#DB2777", "#F59E0B", "#EA580C", "#059669", "#DC2626"];
 
       window.APP_CONFIG = {
-        API_URL: "",
+        API_URL: "https://script.google.com/macros/s/AKfycbwhlpFp54ykNwErJ2t45Oc5yEwCMsX4fkjhQk7Jl5XNG19YaVstb5cbUiRXN2jtOsAT/exec",
         DEFAULT_CURRENCY: "VND"
       };
 
@@ -4093,7 +4093,7 @@
 
       function isUnsupportedActionError(error) {
         const message = String((error && error.message) || "");
-        return /Action không được hỗ trợ|Action mock chưa hỗ trợ/i.test(message);
+        return /Action không được hỗ trợ|Action mock chưa hỗ trợ|Thao tác chưa được hỗ trợ trên trình duyệt/i.test(message);
       }
 
       function isAppsScriptPermissionError(error) {
@@ -4436,16 +4436,16 @@
               <section class="auth-hero">
                 <div class="auth-brand">
                   <span class="brand-mark brand-mark-auth">UF</span>
-                  <span class="badge">Khôi phục phiên làm việc</span>
+                  <span class="badge">Đang đăng nhập</span>
                 </div>
-                <h1>Đang mở lại workspace gần nhất của bạn</h1>
-                <p>UniFlow sẽ xác thực session, nạp dữ liệu cần thiết và đưa bạn trở lại không gian làm việc vừa dùng gần nhất.</p>
+                <h1>Đang mở lại không gian học tập của bạn</h1>
+                <p>UniFlow đang xác minh tài khoản, nạp dữ liệu cần thiết và đưa bạn trở lại không gian làm việc gần nhất.</p>
               </section>
 
               <section class="auth-card">
                 <div class="auth-note">
                   <strong>Đang khôi phục phiên...</strong>
-                  <span>Vui lòng đợi trong giây lát để UniFlow xác minh tài khoản và đồng bộ dữ liệu gần nhất.</span>
+                  <span>UniFlow đang xác minh tài khoản và đồng bộ dữ liệu gần nhất.</span>
                 </div>
               </section>
             </div>
@@ -4480,18 +4480,18 @@
               <div class="auth-grid">
                 <div class="auth-highlight">
                   <strong>Deadline luôn trong tầm mắt</strong>
-                  <span>Xem nhanh việc cần làm hôm nay, task sắp tới, ngân sách tháng và giờ học ngay sau khi đăng nhập.</span>
+                  <span>Xem nhanh việc cần làm hôm nay, deadline sắp tới, ngân sách tháng và thời lượng học ngay sau khi đăng nhập.</span>
                 </div>
                 <div class="auth-highlight">
                   <strong>Dữ liệu riêng theo tài khoản</strong>
-                  <span>Mọi dữ liệu được tách biệt theo session và tenant riêng, giữ an toàn cho học tập, chi tiêu và nhật ký học của bạn.</span>
+                  <span>Mỗi tài khoản có không gian dữ liệu riêng, giúp bảo vệ thông tin học tập, chi tiêu và nhật ký học của bạn.</span>
                 </div>
               </div>
             </section>
 
             <section class="auth-card">
               <div class="auth-card-head">
-                <h2>${isRegister ? "Tạo workspace học tập" : "Chào mừng trở lại"}</h2>
+                <h2>${isRegister ? "Tạo tài khoản học tập" : "Chào mừng trở lại"}</h2>
                 <p>${isRegister ? "Tạo tài khoản để bắt đầu quản lý môn học, công việc, chi tiêu và nhật ký học trong một nơi duy nhất." : "Đăng nhập để tiếp tục theo dõi deadline, ngân sách và tiến độ học tập của bạn."}</p>
               </div>
               <div class="auth-tabs">
@@ -4502,7 +4502,7 @@
               ${isRegister ? `
                 <form id="authRegisterForm" class="auth-form">
                   ${field("Tên hiển thị", "registerDisplayName", "", "text", true)}
-                  ${field("Tên khách hàng / nhóm", "registerCustomerName", "", "text", true)}
+                  ${field("Tên nhóm hoặc lớp", "registerCustomerName", "", "text", true)}
                   ${field("Email", "registerEmail", "", "email", true)}
                   ${field("Mật khẩu", "registerPassword", "", "password", true)}
                   <div class="auth-actions">
@@ -4520,13 +4520,8 @@
               `}
 
               <div class="auth-note">
-                <strong>Trạng thái kết nối:</strong>
-                <span>${isApiConfigured() ? "Ứng dụng đã có backend Google Apps Script và sẽ dùng phiên đăng nhập thật." : "Chưa cấu hình backend cloud. Màn hình này vẫn sẵn sàng cho local/mock mode."}</span>
-              </div>
-
-              <div class="auth-footer" style="margin-top:14px;">
-                <span class="auth-connection">${isApiConfigured() ? "Đang dùng cloud" : "Đang dùng mock"}</span>
-                <button class="btn btn-secondary" data-action="test-connection" type="button">Kiểm tra kết nối</button>
+                <strong>Bảo mật dữ liệu</strong>
+                <span>Dữ liệu học tập và chi tiêu được quản lý theo tài khoản của bạn. Hãy đăng nhập để tiếp tục sử dụng UniFlow.</span>
               </div>
             </section>
           </div>
@@ -4946,11 +4941,11 @@
         const result = await response.json();
 
         if (!result || typeof result.ok !== "boolean") {
-          throw new Error("Backend không trả về đúng response format.");
+          throw new Error("Hệ thống không trả về đúng định dạng dữ liệu.");
         }
 
         if (!result.ok) {
-          const message = result.error || "Backend trả về lỗi không xác định.";
+          const message = result.error || "Hệ thống trả về lỗi không xác định.";
 
           if (!publicActions[action] && /phiên đăng nhập|sessiontoken|đăng nhập/i.test(String(message))) {
             clearAuthSession({ authScreen: "login" });
@@ -4987,9 +4982,9 @@
           }
         } catch (error) {
           if (isApiConfigured()) {
-            showToast("Không tải được dữ liệu cloud. " + error.message, "error");
+            showToast("Không tải được dữ liệu đồng bộ. " + error.message, "error");
           } else {
-            showToast("Không tải được dữ liệu local. " + error.message, "error");
+            showToast("Không tải được dữ liệu trên trình duyệt. " + error.message, "error");
           }
         } finally {
           if (!settings.skipLoading) {
@@ -5294,7 +5289,7 @@
               </div>
               <div class="hero-kpi-row">
                 <div class="hero-kpi">
-                  <span>Task hôm nay</span>
+                  <span>Việc hôm nay</span>
                   <strong>${dashboard.todayTaskCount || 0}</strong>
                 </div>
                 <div class="hero-kpi">
@@ -5315,8 +5310,8 @@
           </section>
 
           <section class="grid-cards">
-            ${statCard("Task hôm nay", dashboard.todayTaskCount || 0)}
-            ${statCard("Task quá hạn", dashboard.overdueTaskCount || 0)}
+            ${statCard("Việc hôm nay", dashboard.todayTaskCount || 0)}
+            ${statCard("Việc quá hạn", dashboard.overdueTaskCount || 0)}
             ${statCard("Deadline sắp tới", dashboard.deadlineSoonCount || 0)}
             ${statCard("Tổng chi tháng này", formatCurrency(dashboard.monthlyExpenseTotal || 0))}
             ${statCard("Ngân sách còn lại", formatCurrency(dashboard.remainingBudget || 0))}
@@ -5363,7 +5358,7 @@
               <div class="section-head">
                 <div>
                   <h2>Biểu đồ chi tiêu theo danh mục</h2>
-                  <p>Dữ liệu tháng hiện tại, ưu tiên dùng analytics backend nếu có.</p>
+                  <p>Dữ liệu tháng hiện tại, ưu tiên dùng kết quả đồng bộ từ hệ thống khi có.</p>
                 </div>
               </div>
               ${renderBarChart(dashboard.expenseByCategory || {}, true, { labelFormatter: (value) => categoryLabel(value) })}
@@ -5372,7 +5367,7 @@
             <section class="mvp-card">
               <div class="section-head">
                 <div>
-                  <h2>Biểu đồ task theo trạng thái</h2>
+                  <h2>Biểu đồ công việc theo trạng thái</h2>
                   <p>Phân bổ các việc cần làm, đang làm, hoàn thành và đã huỷ.</p>
                 </div>
               </div>
@@ -5391,7 +5386,7 @@
             <div class="section-head">
               <div>
                 <h2>Môn học</h2>
-                <p>Quản lý thông tin môn, tín chỉ và các task gắn theo từng môn.</p>
+                <p>Quản lý thông tin môn học, tín chỉ và các công việc liên quan theo từng môn.</p>
               </div>
               <button class="btn btn-primary" data-action="add-subject" type="button">+ Môn học</button>
             </div>
@@ -5405,7 +5400,7 @@
                 <strong>${totalCredits}</strong>
               </article>
               <article class="subject-summary-tile">
-                <span>Task gắn môn</span>
+                <span>Việc gắn môn</span>
                 <strong>${linkedTasks}</strong>
               </article>
             </div>
@@ -5784,15 +5779,15 @@
         const reminderEmail = state.settings.reminderEmail || ((state.authUser && state.authUser.email) || "");
         const appUrl = state.settings.appUrl || getSuggestedAppUrl();
         const accountEmail = (state.authUser && state.authUser.email) || "";
-        const workspaceName = (state.customer && state.customer.name) || (state.dataMode === "cloud" ? "Không gian dữ liệu của bạn" : "Dữ liệu local trên trình duyệt");
-        const modeLabel = state.dataMode === "cloud" ? "Cloud" : "Mock";
+        const workspaceName = (state.customer && state.customer.name) || "Không gian dữ liệu của bạn";
+        const modeLabel = state.dataMode === "cloud" ? "Đã đồng bộ" : "Trên trình duyệt";
 
         return `
           <section class="mvp-card hero-card">
             <div class="section-head">
               <div>
                 <h2>Tài khoản / Không gian dữ liệu</h2>
-                <p>${state.dataMode === "cloud" ? "Dữ liệu học tập và chi tiêu đang được lưu trong không gian riêng của bạn." : "Bạn đang dùng dữ liệu local/mock trên trình duyệt để trải nghiệm hoặc phát triển giao diện."}</p>
+                <p>${state.dataMode === "cloud" ? "Dữ liệu học tập và chi tiêu đang được đồng bộ trong không gian riêng của bạn." : "Dữ liệu hiện được lưu trên trình duyệt này cho đến khi kết nối đồng bộ sẵn sàng."}</p>
                 ${accountEmail ? `<p class="muted">Email tài khoản: <strong>${escapeHtml(accountEmail)}</strong></p>` : ""}
               </div>
               <span class="badge-status">${modeLabel}</span>
@@ -5803,12 +5798,12 @@
                 <strong>${escapeHtml(workspaceName)}</strong>
               </div>
               <div class="settings-meta-card">
-                <span>Chế độ</span>
+                <span>Trạng thái dữ liệu</span>
                 <strong>${escapeHtml(modeLabel)}</strong>
               </div>
               <div class="settings-meta-card">
                 <span>Tài khoản</span>
-                <strong>${escapeHtml(accountEmail || "Local/mock")}</strong>
+                <strong>${escapeHtml(accountEmail || "Chưa đăng nhập")}</strong>
               </div>
             </div>
           </section>
@@ -5921,20 +5916,20 @@
             <div class="section-head">
               <div>
                 <h2>Sao lưu dữ liệu</h2>
-                <p>Tải xuống bản sao dữ liệu. Import backup chỉ dùng cho local/mock mode để tránh ghi đè dữ liệu cloud.</p>
+                <p>Tải xuống bản sao dữ liệu cá nhân để lưu trữ hoặc khôi phục khi cần.</p>
               </div>
             </div>
             <div class="item-actions">
-              <button class="btn btn-secondary" data-action="export-backup" type="button">Tải backup JSON</button>
-              <button class="btn btn-secondary" data-action="import-backup" type="button">Import backup JSON</button>
+              <button class="btn btn-secondary" data-action="export-backup" type="button">Tải bản sao JSON</button>
+              <button class="btn btn-secondary" data-action="import-backup" type="button">Khôi phục từ JSON</button>
             </div>
           </section>
 
           <section class="mvp-card">
             <div class="section-head">
               <div>
-                <h2>Nâng cao / Chẩn đoán</h2>
-                <p>Dành cho kiểm tra triển khai hoặc hỗ trợ kỹ thuật.</p>
+                <h2>Thông tin hệ thống</h2>
+                <p>Các thông tin này dùng khi bạn cần đối chiếu hoặc hỗ trợ tài khoản.</p>
               </div>
               <span class="badge-status">${modeLabel}</span>
             </div>
@@ -5949,7 +5944,7 @@
               </div>
             </div>
             <div class="item-actions" style="margin-top:12px;">
-              <button class="btn btn-secondary" data-action="test-connection" type="button">Kiểm tra kết nối</button>
+              <button class="btn btn-secondary" data-action="test-connection" type="button">Kiểm tra hệ thống</button>
             </div>
           </section>
         `;
@@ -6081,7 +6076,7 @@
           <article class="compact-row">
             <div class="compact-row-top">
               <div>
-                <h3 class="compact-row-title">${escapeHtml(item.title || "Task")}</h3>
+                <h3 class="compact-row-title">${escapeHtml(item.title || "Công việc")}</h3>
                 <div class="compact-row-meta">
                   ${subject ? `<span>${escapeHtml(subject.name)}</span>` : ""}
                   <span>${escapeHtml(formatTaskDeadline(item))}</span>
@@ -6147,10 +6142,10 @@
           <div class="meter-card">
             <div class="meter-copy">
               <div>
-                <div class="stat-label">Tỉ lệ hoàn thành task</div>
+                <div class="stat-label">Tỉ lệ hoàn thành công việc</div>
                 <strong>${Number(taskMetrics.completionRate || 0)}%</strong>
               </div>
-              <span class="badge-status">${activeTasks} task đang theo dõi</span>
+              <span class="badge-status">${activeTasks} công việc đang theo dõi</span>
             </div>
             <div class="bar-track"><div class="bar-fill" style="width:${Math.max(0, Math.min(100, Number(taskMetrics.completionRate || 0)))}%"></div></div>
             <p class="muted">${taskMetrics.doneCount} đã xong · ${taskMetrics.openCount} chưa xong${taskMetrics.cancelledCount ? ` · ${taskMetrics.cancelledCount} đã huỷ` : ""}</p>
@@ -6613,7 +6608,7 @@
         syncGradeScorePreview();
       }
 
-      /* ===== Mock backend ===== */
+      /* ===== Browser fallback data layer ===== */
       function getMockAuthAccount() {
         return loadLocal(STORAGE_KEYS.mockAuthAccount, null);
       }
@@ -6644,7 +6639,7 @@
           },
           customer: {
             id: String(item.customerId || ""),
-            name: String(item.customerName || "Khách hàng local"),
+            name: String(item.customerName || "Không gian dữ liệu"),
             slug: String(item.customerSlug || "local"),
             ownerUserId: String(item.userId || ""),
             spreadsheetId: "mock-local",
@@ -6693,7 +6688,7 @@
         const now = new Date().toISOString();
 
         if (action === "health") {
-          return { status: "ok", service: "mock-localStorage", version: "mvp", timestamp: now };
+          return { status: "ok", service: "browserStorage", version: "production", timestamp: now };
         }
 
         if (action === "initDatabase") {
@@ -6706,7 +6701,7 @@
           const email = String(payload.email || "").trim().toLowerCase();
           const password = String(payload.password || "");
           const displayName = String(payload.displayName || "Sinh viên").trim() || "Sinh viên";
-          const customerName = String(payload.customerName || displayName || "Khách hàng local").trim() || "Khách hàng local";
+          const customerName = String(payload.customerName || displayName || "Không gian dữ liệu").trim() || "Không gian dữ liệu";
 
           if (!email) {
             throw new Error("Email không được để trống.");
@@ -6721,7 +6716,7 @@
           }
 
           if (currentAccount) {
-            throw new Error("Mock mode hiện chỉ duy trì một tài khoản local. Hãy dùng tài khoản đã tạo hoặc xoá localStorage để tạo tài khoản mới.");
+            throw new Error("Trình duyệt hiện đã có một tài khoản lưu tạm. Hãy dùng tài khoản đã tạo hoặc xoá dữ liệu trình duyệt để tạo tài khoản mới.");
           }
 
           const account = {
@@ -7396,7 +7391,7 @@
           return computeStudySummary(payload);
         }
 
-        throw new Error("Action mock chưa hỗ trợ: " + action);
+        throw new Error("Thao tác chưa được hỗ trợ trên trình duyệt: " + action);
       }
 
       /* ===== Data computations ===== */
@@ -7716,11 +7711,11 @@
           } else if (action === "save-reminder-settings") {
             await saveReminderSettingsFromForm();
           } else if (action === "createDeadlineReminderTrigger") {
-            await runReminderAutomationAction("createDeadlineReminderTrigger", "Đã bật trigger nhắc deadline hằng ngày.", "Đang bật trigger...");
+            await runReminderAutomationAction("createDeadlineReminderTrigger", "Đã bật nhắc deadline hằng ngày.", "Đang bật nhắc...");
           } else if (action === "deleteDeadlineReminderTrigger") {
-            await runReminderAutomationAction("deleteDeadlineReminderTrigger", "Đã tắt trigger nhắc deadline.", "Đang tắt trigger...");
+            await runReminderAutomationAction("deleteDeadlineReminderTrigger", "Đã tắt nhắc deadline.", "Đang tắt nhắc...");
           } else if (action === "sendDeadlineRemindersNowForTest") {
-            await runReminderAutomationAction("sendDeadlineRemindersNowForTest", "Đã chạy thử gửi email nhắc deadline.", "Đang gửi thử...");
+            await runReminderAutomationAction("sendDeadlineRemindersNowForTest", "Đã gửi email nhắc deadline.", "Đang gửi...");
           } else if (action === "logout") {
             await logoutApp();
           } else if (action === "export-backup") {
@@ -7851,7 +7846,7 @@
       /* ===== Settings and backup ===== */
       async function testConnection() {
         if (!isApiConfigured()) {
-          showToast("Backend cloud chưa được cấu hình.", "error");
+          showToast("Hệ thống đồng bộ chưa được cấu hình.", "error");
           return;
         }
 
@@ -7865,14 +7860,14 @@
           const result = await response.json();
 
           if (!result || typeof result.ok !== "boolean") {
-            throw new Error("Backend không trả về đúng response format.");
+            throw new Error("Hệ thống không trả về đúng định dạng dữ liệu.");
           }
 
           if (!result.ok) {
-            throw new Error(result.error || "Backend trả về lỗi không xác định.");
+            throw new Error(result.error || "Hệ thống trả về lỗi không xác định.");
           }
 
-          showToast("Health OK: " + (((result.data || {}).service) || "Apps Script"), "success");
+          showToast("Kết nối hệ thống hoạt động bình thường.", "success");
         } finally {
           hideLoading();
         }
@@ -7880,7 +7875,7 @@
 
       async function initDatabaseFromSettings() {
         if (!isApiConfigured()) {
-          showToast("Backend cloud chưa được cấu hình.", "error");
+          showToast("Hệ thống đồng bộ chưa được cấu hình.", "error");
           return;
         }
 
@@ -7890,7 +7885,7 @@
           email: ""
         });
         hideLoading();
-        showToast("Đã init database trên Google Sheets.", "success");
+        showToast("Đã khởi tạo dữ liệu hệ thống.", "success");
         await loadAllData();
       }
 
@@ -7984,13 +7979,13 @@
 
       function buildReminderAutomationSuccessMessage(actionName, response, fallbackText) {
         if (actionName === "createDeadlineReminderTrigger" && response && response.existing) {
-          return "Trigger nhắc deadline hằng ngày đã được bật từ trước.";
+          return "Nhắc deadline hằng ngày đã được bật từ trước.";
         }
 
         if (actionName === "deleteDeadlineReminderTrigger" && response && typeof response.deleted !== "undefined") {
           return Number(response.deleted || 0) > 0
-            ? `Đã tắt ${Number(response.deleted || 0)} trigger nhắc deadline.`
-            : "Hiện không có trigger nhắc deadline nào đang bật.";
+            ? `Đã tắt ${Number(response.deleted || 0)} lịch nhắc deadline.`
+            : "Hiện không có lịch nhắc deadline nào đang bật.";
         }
 
         if (actionName === "sendDeadlineRemindersNowForTest" && response && typeof response === "object") {
@@ -8013,7 +8008,7 @@
       async function runReminderAutomationAction(actionName, successMessage, busyText) {
         return runLockedAction(actionName, async () => {
           if (!isApiConfigured()) {
-            showToast("Tính năng automation email chỉ dùng được ở cloud mode.", "warning");
+            showToast("Tính năng nhắc email tự động chỉ hoạt động khi dữ liệu đã được đồng bộ.", "warning");
             return;
           }
 
@@ -8026,12 +8021,12 @@
             renderAfterDataMutation("settings");
           } catch (error) {
             if (isAppsScriptPermissionError(error)) {
-              showToast("Apps Script chưa được cấp quyền cho trigger hoặc email reminder. Mở editor Apps Script, chạy thủ công hàm reminder một lần để cấp quyền rồi deploy lại Web App.", "warning");
+              showToast("Apps Script chưa được cấp quyền gửi email nhắc hạn. Hãy cấp quyền trong Apps Script rồi triển khai lại Web App.", "warning");
               return;
             }
 
             if (isUnsupportedActionError(error)) {
-              showToast("Backend hiện tại chưa hỗ trợ automation reminder. Hãy deploy `Code.gs` mới nhất trước khi dùng tính năng này.", "warning");
+              showToast("Hệ thống hiện chưa hỗ trợ nhắc email tự động. Vui lòng cập nhật Apps Script trước khi dùng tính năng này.", "warning");
               return;
             }
 
@@ -8627,17 +8622,17 @@
         link.download = "student-life-backup.json";
         link.click();
         URL.revokeObjectURL(url);
-        showToast("Đã export backup JSON.", "success");
+        showToast("Đã tải bản sao dữ liệu JSON.", "success");
       }
 
       function showImportBackup() {
         if (isApiConfigured()) {
-          showToast("Import backup chỉ hỗ trợ local/mock mode để tránh ghi đè nhầm dữ liệu cloud theo session hiện tại.", "warning");
+          showToast("Chức năng khôi phục từ JSON hiện chỉ áp dụng cho dữ liệu trên trình duyệt để tránh ghi đè dữ liệu đã đồng bộ.", "warning");
           return;
         }
 
         showModal("Import backup JSON", `
-          <p class="muted">Dán nội dung JSON đã export. Import sẽ ghi vào dữ liệu local/mock hiện tại.</p>
+          <p class="muted">Dán nội dung JSON đã xuất trước đó. Dữ liệu sẽ được khôi phục trên trình duyệt hiện tại.</p>
           ${textareaField("Backup JSON", "backupJson", "")}
         `, async (formData) => {
           const raw = formData.get("backupJson");
@@ -8673,7 +8668,7 @@
           persistSettings();
           state.dataMode = "mock";
           closeModal();
-          showToast("Đã import backup vào dữ liệu local.", "success");
+          showToast("Đã khôi phục dữ liệu từ JSON.", "success");
           renderApp();
         });
       }
@@ -8741,7 +8736,7 @@
           ],
           tasks: [
             { id: taskTodayId, userId: state.userId, title: "Làm bài tập DOM", description: "Hoàn thành phần querySelector và event.", subjectId: subjectId, type: "assignment", priority: "high", status: "todo", dueDate: today(), dueTime: "21:00", estimatedMinutes: 90, completedAt: "", createdAt: now, updatedAt: now },
-            { id: localId("task"), userId: state.userId, title: "Nộp báo cáo nhóm", description: "Chuẩn bị slide và phần demo.", subjectId: secondSubjectId, type: "project", priority: "urgent", status: "doing", dueDate: addDays(today(), 2), dueTime: "18:00", estimatedMinutes: 120, completedAt: "", createdAt: now, updatedAt: now },
+            { id: localId("task"), userId: state.userId, title: "Nộp báo cáo nhóm", description: "Chuẩn bị slide và phần trình bày.", subjectId: secondSubjectId, type: "project", priority: "urgent", status: "doing", dueDate: addDays(today(), 2), dueTime: "18:00", estimatedMinutes: 120, completedAt: "", createdAt: now, updatedAt: now },
             { id: localId("task"), userId: state.userId, title: "Đọc tài liệu thực tập", description: "Tổng hợp câu hỏi cho buổi phỏng vấn.", subjectId: "", type: "reading", priority: "medium", status: "doing", dueDate: addDays(today(), -1), dueTime: "09:00", estimatedMinutes: 60, completedAt: "", createdAt: now, updatedAt: now }
           ],
           expenses: [
@@ -8757,7 +8752,7 @@
             { id: localId("log"), userId: state.userId, subjectId: secondSubjectId, taskId: "", date: addDays(today(), -2), minutes: 60, note: "Đọc chương 1", createdAt: now }
           ],
           gradeRecords: [
-            normalizeGradeRecord({ id: localId("grd"), userId: state.userId, subjectName: "Lập trình Web", subjectId: subjectId, semester: "HK1", academicYear: currentAcademicYear(), credits: 3, score10: 8.7, includeInGpa: true, note: "Điểm demo", createdAt: now, updatedAt: now }),
+            normalizeGradeRecord({ id: localId("grd"), userId: state.userId, subjectName: "Lập trình Web", subjectId: subjectId, semester: "HK1", academicYear: currentAcademicYear(), credits: 3, score10: 8.7, includeInGpa: true, note: "Điểm giữa kỳ", createdAt: now, updatedAt: now }),
             normalizeGradeRecord({ id: localId("grd"), userId: state.userId, subjectName: "Kinh tế vi mô", subjectId: secondSubjectId, semester: "HK1", academicYear: currentAcademicYear(), credits: 2, score10: 7.4, includeInGpa: true, note: "", createdAt: now, updatedAt: now })
           ]
         };
@@ -8811,8 +8806,8 @@
       }
 
       function updateModePills() {
-        const text = state.dataMode === "cloud" ? "Đang dùng cloud" : "Đang dùng local";
-        document.getElementById("modePillTop").textContent = state.dataMode === "cloud" ? "Cloud" : "Local";
+        const text = state.dataMode === "cloud" ? "Dữ liệu đã đồng bộ" : "Dữ liệu trên trình duyệt";
+        document.getElementById("modePillTop").textContent = state.dataMode === "cloud" ? "Đồng bộ" : "Trình duyệt";
         document.getElementById("modePillSide").textContent = text;
       }
 
@@ -9741,8 +9736,9 @@
 
       /* ===== Boot ===== */
       (function initApp() {
+        const defaultApiUrl = String(window.APP_CONFIG.API_URL || "").trim();
         const storedApiUrl = loadLocal(STORAGE_KEYS.apiUrl, null);
-        window.APP_CONFIG.API_URL = typeof storedApiUrl === "string" ? storedApiUrl : String(window.APP_CONFIG.API_URL || "");
+        window.APP_CONFIG.API_URL = defaultApiUrl || (typeof storedApiUrl === "string" ? storedApiUrl.trim() : "");
         const storedUserId = loadLocal(STORAGE_KEYS.userId, "");
         const storedSessionToken = loadLocal(STORAGE_KEYS.sessionToken, "");
         state.userId = typeof storedUserId === "string" ? storedUserId : "";
